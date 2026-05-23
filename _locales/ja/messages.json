@@ -25,5 +25,8 @@
     "days": { "content": "$1" }
   }
   },
-  "limitReached": { "message": "無料版の制限(5件)に達しました。無制限にするにはPremiumへ！" }
+  "limitReached": { "message": "無料版の制限(5件)に達しました。無制限にするにはPremiumへ！" },
+  "loadingState": { "message": "読み込み中..." },
+  "emptyState": { "message": "締切はまだありません" },
+  "nextOccurrenceButtonTitle": { "message": "次の予定日に進める" }
   }
