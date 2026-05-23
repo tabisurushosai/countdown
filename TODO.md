@@ -1,0 +1,13 @@
+# countdown TODO (細粒度)
+- [ ] T001: popup.html/src/popup.ts に締切(名前+日付)入力欄+追加ボタンを置き、storage.localの配列に保存・一覧表示するだけ
+- [ ] T002: 各締切の残り日数を計算して一覧に表示(過ぎたら「超過」)
+- [ ] T003: 各締切の削除ボタン
+- [ ] T004: 残り日数が最小の締切をアイコンバッジに表示(chrome.action.setBadgeText)
+- [ ] T005: 残り3日以内はバッジ色を赤に(setBadgeBackgroundColor)
+- [ ] T006: 一覧を締切が近い順にソート
+- [ ] T007: 起動時にstorage.localから復元
+- [ ] T008: _locales ja/en を chrome.i18n で全UIに適用
+- [ ] T009: Premiumゲート(trial_start_ts+Stripe)。無料は5件まで、Premiumで無制限+繰返し締切
+- [ ] T010: npm run build を通しts/lintを解消
+- [ ] T011: release/countdown.zip 生成(node_modules除外)
+- [ ] T012: legal/PRIVACY.md と TERMS.md(外部通信なし・データ収集なし・$3買い切り7日トライアル明記)
