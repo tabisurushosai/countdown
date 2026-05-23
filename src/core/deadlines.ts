@@ -1,4 +1,4 @@
-import type { Deadline } from '../types';
+import type { Deadline, DeadlineRepeat } from '../types';
 
 const DAY_MS = 1000 * 60 * 60 * 24;
 
@@ -49,7 +49,7 @@ export function getNextDate(dateStr: string, repeat: Deadline['repeat']): string
   } else if (repeat === 'yearly') {
     date.setFullYear(date.getFullYear() + 1);
   }
-  return date.toISOString().split('T')[0];
+  return date.toISOString().slice(0, 10);
 }
 
 export function getBadgeState(deadlines: Deadline[], today = new Date()): BadgeState {
@@ -68,7 +68,7 @@ export function canAddDeadline(isPremium: boolean, deadlineCount: number): boole
   return isPremium || deadlineCount < 5;
 }
 
-export function getSavedRepeat(isPremium: boolean, repeat: Deadline['repeat']): Deadline['repeat'] {
+export function getSavedRepeat(isPremium: boolean, repeat: DeadlineRepeat): DeadlineRepeat {
   return isPremium ? repeat : 'none';
 }
 

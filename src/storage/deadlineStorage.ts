@@ -13,7 +13,7 @@ interface CountdownStorage {
 export interface CountdownSnapshot {
   deadlines: Deadline[];
   isPremium: boolean;
-  trialStartTs?: number;
+  trialStartTs: number | undefined;
 }
 
 function getStorage(keys: string[]): Promise<CountdownStorage> {
