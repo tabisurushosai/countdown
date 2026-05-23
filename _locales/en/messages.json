@@ -1,1 +1,16 @@
-{ "extName":{"message":"Deadline Countdown"},"extDesc":{"message":"Shows days left until your deadlines on the toolbar icon."} }
+{
+  "extName": { "message": "Deadline Countdown" },
+  "extDesc": { "message": "Shows days left until your deadlines on the toolbar icon." },
+  "title": { "message": "Deadline Countdown" },
+  "namePlaceholder": { "message": "Name" },
+  "addButton": { "message": "Add" },
+  "deleteButton": { "message": "Delete" },
+  "statusOverdue": { "message": "Overdue" },
+  "statusToday": { "message": "Today" },
+  "statusRemaining": {
+    "message": "$DAYS$ days left",
+    "placeholders": {
+      "days": { "content": "$1" }
+    }
+  }
+}

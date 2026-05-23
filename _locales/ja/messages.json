@@ -1,1 +1,16 @@
-{ "extName":{"message":"締切カウントダウン"},"extDesc":{"message":"提出日や予定までの残り日数をアイコンに表示。うっかり忘れを防ぎます。"} }
+{
+  "extName": { "message": "締切カウントダウン" },
+  "extDesc": { "message": "提出日や予定までの残り日数をアイコンに表示。うっかり忘れを防ぎます。" },
+  "title": { "message": "締切カウントダウン" },
+  "namePlaceholder": { "message": "名前" },
+  "addButton": { "message": "追加" },
+  "deleteButton": { "message": "削除" },
+  "statusOverdue": { "message": "超過" },
+  "statusToday": { "message": "今日" },
+  "statusRemaining": {
+    "message": "残り $DAYS$ 日",
+    "placeholders": {
+      "days": { "content": "$1" }
+    }
+  }
+}

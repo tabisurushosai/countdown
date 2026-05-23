@@ -11,6 +11,13 @@ const dateInput = document.getElementById('deadline-date') as HTMLInputElement;
 const addBtn = document.getElementById('add-btn') as HTMLButtonElement;
 const listContainer = document.getElementById('deadline-list') as HTMLDivElement;
 
+function initI18n() {
+  const titleEl = document.getElementById('title');
+  if (titleEl) titleEl.textContent = chrome.i18n.getMessage('title');
+  nameInput.placeholder = chrome.i18n.getMessage('namePlaceholder');
+  addBtn.textContent = chrome.i18n.getMessage('addButton');
+}
+
 function updateBadge(deadlines: Deadline[]) {
   if (deadlines.length === 0) {
     chrome.action.setBadgeText({ text: '' });
@@ -59,11 +66,11 @@ function renderDeadlines(deadlines: Deadline[]) {
 
     let status = '';
     if (diffDays < 0) {
-      status = '超過';
+      status = chrome.i18n.getMessage('statusOverdue');
     } else if (diffDays === 0) {
-      status = '今日';
+      status = chrome.i18n.getMessage('statusToday');
     } else {
-      status = `残り ${diffDays} 日`;
+      status = chrome.i18n.getMessage('statusRemaining', [diffDays.toString()]);
     }
 
     const item = document.createElement('div');
@@ -78,7 +85,7 @@ function renderDeadlines(deadlines: Deadline[]) {
     item.appendChild(text);
 
     const delBtn = document.createElement('button');
-    delBtn.textContent = '削除';
+    delBtn.textContent = chrome.i18n.getMessage('deleteButton');
     delBtn.style.marginLeft = '5px';
     delBtn.onclick = () => {
       chrome.storage.local.get(['deadlines'], (result) => {
@@ -125,3 +132,4 @@ addBtn.addEventListener('click', () => {
 });
 
 loadDeadlines();
+initI18n();
