@@ -32,7 +32,28 @@ function renderDeadlines(deadlines: Deadline[]) {
     const item = document.createElement('div');
     item.style.padding = '5px';
     item.style.borderBottom = '1px solid #ccc';
-    item.textContent = `${d.name} - ${d.date} (${status})`;
+    item.style.display = 'flex';
+    item.style.justifyContent = 'space-between';
+    item.style.alignItems = 'center';
+
+    const text = document.createElement('span');
+    text.textContent = `${d.name} - ${d.date} (${status})`;
+    item.appendChild(text);
+
+    const delBtn = document.createElement('button');
+    delBtn.textContent = '削除';
+    delBtn.style.marginLeft = '5px';
+    delBtn.onclick = () => {
+      chrome.storage.local.get(['deadlines'], (result) => {
+        const current: Deadline[] = result.deadlines || [];
+        const filtered = current.filter((item) => item.id !== d.id);
+        chrome.storage.local.set({ deadlines: filtered }, () => {
+          renderDeadlines(filtered);
+        });
+      });
+    };
+    item.appendChild(delBtn);
+
     listContainer.appendChild(item);
   });
 }
