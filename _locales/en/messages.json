@@ -8,9 +8,22 @@
   "statusOverdue": { "message": "Overdue" },
   "statusToday": { "message": "Today" },
   "statusRemaining": {
-    "message": "$DAYS$ days left",
-    "placeholders": {
-      "days": { "content": "$1" }
-    }
+  "message": "$DAYS$ days left",
+  "placeholders": {
+    "days": { "content": "$1" }
   }
-}
+  },
+  "repeatNone": { "message": "No Repeat" },
+  "repeatWeekly": { "message": "Weekly" },
+  "repeatMonthly": { "message": "Monthly" },
+  "repeatYearly": { "message": "Yearly" },
+  "upgradeButton": { "message": "Upgrade to Premium" },
+  "premiumActive": { "message": "Premium Active" },
+  "trialDaysLeft": {
+  "message": "$DAYS$ days trial left",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
+  "limitReached": { "message": "Free limit reached (max 5). Upgrade for unlimited!" }
+  }

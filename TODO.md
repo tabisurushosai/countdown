@@ -7,7 +7,7 @@
 - [x] T006: 一覧を締切が近い順にソート
 - [x] T007: 起動時にstorage.localから復元
 - [x] T008: _locales ja/en を chrome.i18n で全UIに適用
-- [ ] T009: Premiumゲート(trial_start_ts+Stripe)。無料は5件まで、Premiumで無制限+繰返し締切
+- [x] T009: Premiumゲート(trial_start_ts+Stripe)。無料は5件まで、Premiumで無制限+繰返し締切
 - [ ] T010: npm run build を通しts/lintを解消
 - [ ] T011: release/countdown.zip 生成(node_modules除外)
 - [ ] T012: legal/PRIVACY.md と TERMS.md(外部通信なし・データ収集なし・$3買い切り7日トライアル明記)

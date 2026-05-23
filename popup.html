@@ -8,9 +8,20 @@
     <div id="input-form" style="margin-bottom: 10px;">
         <input type="text" id="deadline-name" placeholder="名前" style="width: 100%; margin-bottom: 5px;">
         <input type="date" id="deadline-date" style="width: 100%; margin-bottom: 5px;">
+        <select id="deadline-repeat" style="width: 100%; margin-bottom: 5px; display: none;">
+            <option value="none" id="repeat-none">None</option>
+            <option value="weekly" id="repeat-weekly">Weekly</option>
+            <option value="monthly" id="repeat-monthly">Monthly</option>
+            <option value="yearly" id="repeat-yearly">Yearly</option>
+        </select>
         <button id="add-btn" style="width: 100%;">追加</button>
     </div>
     <div id="deadline-list"></div>
+    <hr>
+    <div id="premium-info" style="font-size: 0.8em; color: #666;">
+        <span id="trial-status"></span>
+        <button id="upgrade-btn" style="display: none; margin-left: 10px;">Upgrade to Premium</button>
+    </div>
     <script type="module" src="/src/popup.ts"></script>
 </body>
 </html>

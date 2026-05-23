@@ -8,9 +8,22 @@
   "statusOverdue": { "message": "超過" },
   "statusToday": { "message": "今日" },
   "statusRemaining": {
-    "message": "残り $DAYS$ 日",
-    "placeholders": {
-      "days": { "content": "$1" }
-    }
+  "message": "残り $DAYS$ 日",
+  "placeholders": {
+    "days": { "content": "$1" }
   }
-}
+  },
+  "repeatNone": { "message": "繰り返しなし" },
+  "repeatWeekly": { "message": "毎週" },
+  "repeatMonthly": { "message": "毎月" },
+  "repeatYearly": { "message": "毎年" },
+  "upgradeButton": { "message": "Premiumにアップグレード" },
+  "premiumActive": { "message": "Premium有効" },
+  "trialDaysLeft": {
+  "message": "トライアル残り $DAYS$ 日",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
+  "limitReached": { "message": "無料版の制限(5件)に達しました。無制限にするにはPremiumへ！" }
+  }
