@@ -1,11 +1,4 @@
-interface Deadline {
-  id: string;
-  name: string;
-  date: string;
-  repeat?: 'none' | 'weekly' | 'monthly' | 'yearly';
-}
-
-export {};
+import { Deadline } from './types';
 
 const nameInput = document.getElementById('deadline-name') as HTMLInputElement;
 const dateInput = document.getElementById('deadline-date') as HTMLInputElement;
@@ -86,14 +79,11 @@ function renderDeadlines(deadlines: Deadline[]) {
     const diffMs = target.getTime() - now.getTime();
     const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
-    let status = '';
-    if (diffDays < 0) {
-      status = chrome.i18n.getMessage('statusOverdue');
-    } else if (diffDays === 0) {
-      status = chrome.i18n.getMessage('statusToday');
-    } else {
-      status = chrome.i18n.getMessage('statusRemaining', [diffDays.toString()]);
-    }
+    const status = diffDays < 0
+      ? chrome.i18n.getMessage('statusOverdue')
+      : diffDays === 0
+        ? chrome.i18n.getMessage('statusToday')
+        : chrome.i18n.getMessage('statusRemaining', [diffDays.toString()]);
 
     const item = document.createElement('div');
     item.style.padding = '5px';
@@ -183,7 +173,7 @@ upgradeBtn.onclick = () => {
 addBtn.addEventListener('click', () => {
   const name = nameInput.value.trim();
   const date = dateInput.value;
-  const repeat = repeatSelect.value as any;
+  const repeat = repeatSelect.value as Deadline['repeat'];
 
   if (!name || !date) return;
 
