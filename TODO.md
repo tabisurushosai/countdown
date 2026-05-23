@@ -3,7 +3,7 @@
 - [x] T002: 各締切の残り日数を計算して一覧に表示(過ぎたら「超過」)
 - [x] T003: 各締切の削除ボタン
 - [x] T004: 残り日数が最小の締切をアイコンバッジに表示(chrome.action.setBadgeText)
-- [ ] T005: 残り3日以内はバッジ色を赤に(setBadgeBackgroundColor)
+- [x] T005: 残り3日以内はバッジ色を赤に(setBadgeBackgroundColor)
 - [ ] T006: 一覧を締切が近い順にソート
 - [ ] T007: 起動時にstorage.localから復元
 - [ ] T008: _locales ja/en を chrome.i18n で全UIに適用

@@ -31,6 +31,12 @@ function updateBadge(deadlines: Deadline[]) {
 
   const badgeText = minDiff < 0 ? '!' : minDiff.toString();
   chrome.action.setBadgeText({ text: badgeText });
+
+  if (minDiff <= 3) {
+    chrome.action.setBadgeBackgroundColor({ color: '#FF0000' });
+  } else {
+    chrome.action.setBadgeBackgroundColor({ color: '#4688F1' });
+  }
 }
 
 function renderDeadlines(deadlines: Deadline[]) {
