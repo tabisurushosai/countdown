@@ -1,7 +1,6 @@
 import {
   canAddDeadline,
   type DeadlineStatus,
-  getBadgeState,
   getDeadlineStatus,
   getDaysUntil,
   getNextDate,
@@ -9,6 +8,7 @@ import {
   getSavedRepeat,
   sortDeadlinesByDate,
 } from './core/deadlines';
+import { updateChromeBadge } from './chromeBadge';
 import {
   ensureTrialStart,
   getCountdownSnapshot,
@@ -16,15 +16,34 @@ import {
   setDeadlines,
   setPremium,
 } from './storage/deadlineStorage';
-import type { Deadline } from './types';
+import { isDeadlineRepeat } from './types';
+import type { Deadline, DeadlineRepeat } from './types';
 
-const nameInput = document.getElementById('deadline-name') as HTMLInputElement;
-const dateInput = document.getElementById('deadline-date') as HTMLInputElement;
-const repeatSelect = document.getElementById('deadline-repeat') as HTMLSelectElement;
-const addBtn = document.getElementById('add-btn') as HTMLButtonElement;
-const listContainer = document.getElementById('deadline-list') as HTMLDivElement;
-const trialStatus = document.getElementById('trial-status') as HTMLSpanElement;
-const upgradeBtn = document.getElementById('upgrade-btn') as HTMLButtonElement;
+const REPEAT_LABEL_MESSAGE_KEYS: Record<Exclude<DeadlineRepeat, 'none'>, string> = {
+  weekly: 'repeatWeekly',
+  monthly: 'repeatMonthly',
+  yearly: 'repeatYearly',
+};
+
+function getRequiredElement<T extends HTMLElement>(id: string, elementType: { new (): T }): T {
+  const element = document.getElementById(id);
+  if (!(element instanceof elementType)) {
+    throw new Error(`Expected #${id} to be a ${elementType.name}`);
+  }
+  return element;
+}
+
+function setTextById(id: string, text: string): void {
+  getRequiredElement(id, HTMLElement).textContent = text;
+}
+
+const nameInput = getRequiredElement('deadline-name', HTMLInputElement);
+const dateInput = getRequiredElement('deadline-date', HTMLInputElement);
+const repeatSelect = getRequiredElement('deadline-repeat', HTMLSelectElement);
+const addBtn = getRequiredElement('add-btn', HTMLButtonElement);
+const listContainer = getRequiredElement('deadline-list', HTMLDivElement);
+const trialStatus = getRequiredElement('trial-status', HTMLSpanElement);
+const upgradeBtn = getRequiredElement('upgrade-btn', HTMLButtonElement);
 
 function initI18n() {
   const titleEl = document.getElementById('title');
@@ -32,21 +51,12 @@ function initI18n() {
   nameInput.placeholder = chrome.i18n.getMessage('namePlaceholder');
   addBtn.textContent = chrome.i18n.getMessage('addButton');
 
-  document.getElementById('repeat-none')!.textContent = chrome.i18n.getMessage('repeatNone');
-  document.getElementById('repeat-weekly')!.textContent = chrome.i18n.getMessage('repeatWeekly');
-  document.getElementById('repeat-monthly')!.textContent = chrome.i18n.getMessage('repeatMonthly');
-  document.getElementById('repeat-yearly')!.textContent = chrome.i18n.getMessage('repeatYearly');
+  setTextById('repeat-none', chrome.i18n.getMessage('repeatNone'));
+  setTextById('repeat-weekly', chrome.i18n.getMessage('repeatWeekly'));
+  setTextById('repeat-monthly', chrome.i18n.getMessage('repeatMonthly'));
+  setTextById('repeat-yearly', chrome.i18n.getMessage('repeatYearly'));
   upgradeBtn.textContent = chrome.i18n.getMessage('upgradeButton');
   listContainer.replaceChildren(createStateMessage(chrome.i18n.getMessage('loadingState')));
-}
-
-function updateBadge(deadlines: Deadline[]) {
-  const badgeState = getBadgeState(deadlines);
-  chrome.action.setBadgeText({ text: badgeState.text });
-
-  if (badgeState.color) {
-    chrome.action.setBadgeBackgroundColor({ color: badgeState.color });
-  }
 }
 
 function setHidden(element: HTMLElement, hidden: boolean) {
@@ -71,11 +81,12 @@ function formatDeadlineStatus(status: DeadlineStatus): string {
 }
 
 function getRepeatLabel(deadline: Deadline): string {
-  if (!deadline.repeat || deadline.repeat === 'none') {
+  const repeat = deadline.repeat;
+  if (!repeat || repeat === 'none') {
     return '';
   }
 
-  return chrome.i18n.getMessage(`repeat${deadline.repeat.charAt(0).toUpperCase()}${deadline.repeat.slice(1)}`);
+  return chrome.i18n.getMessage(REPEAT_LABEL_MESSAGE_KEYS[repeat]);
 }
 
 function createDeadlineItem(deadline: Deadline): HTMLDivElement {
@@ -156,7 +167,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
 function renderDeadlines(deadlines: Deadline[]) {
   const sortedDeadlines = sortDeadlinesByDate(deadlines);
 
-  updateBadge(sortedDeadlines);
+  updateChromeBadge(sortedDeadlines);
   listContainer.replaceChildren();
 
   if (sortedDeadlines.length === 0) {
@@ -195,7 +206,7 @@ upgradeBtn.onclick = async () => {
 addBtn.addEventListener('click', async () => {
   const name = nameInput.value.trim();
   const date = dateInput.value;
-  const repeat = repeatSelect.value as Deadline['repeat'];
+  const repeat = isDeadlineRepeat(repeatSelect.value) ? repeatSelect.value : 'none';
 
   if (!name || !date) return;
 
