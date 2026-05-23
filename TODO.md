@@ -5,7 +5,7 @@
 - [x] T004: 残り日数が最小の締切をアイコンバッジに表示(chrome.action.setBadgeText)
 - [x] T005: 残り3日以内はバッジ色を赤に(setBadgeBackgroundColor)
 - [x] T006: 一覧を締切が近い順にソート
-- [ ] T007: 起動時にstorage.localから復元
+- [x] T007: 起動時にstorage.localから復元
 - [ ] T008: _locales ja/en を chrome.i18n で全UIに適用
 - [ ] T009: Premiumゲート(trial_start_ts+Stripe)。無料は5件まで、Premiumで無制限+繰返し締切
 - [ ] T010: npm run build を通しts/lintを解消

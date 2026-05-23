@@ -4,6 +4,8 @@ interface Deadline {
   date: string;
 }
 
+export {};
+
 const nameInput = document.getElementById('deadline-name') as HTMLInputElement;
 const dateInput = document.getElementById('deadline-date') as HTMLInputElement;
 const addBtn = document.getElementById('add-btn') as HTMLButtonElement;
