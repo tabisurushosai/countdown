@@ -1,5 +1,6 @@
 import {
   canAddDeadline,
+  type DeadlineStatus,
   getBadgeState,
   getDeadlineStatus,
   getDaysUntil,
@@ -30,12 +31,13 @@ function initI18n() {
   if (titleEl) titleEl.textContent = chrome.i18n.getMessage('title');
   nameInput.placeholder = chrome.i18n.getMessage('namePlaceholder');
   addBtn.textContent = chrome.i18n.getMessage('addButton');
-  
+
   document.getElementById('repeat-none')!.textContent = chrome.i18n.getMessage('repeatNone');
   document.getElementById('repeat-weekly')!.textContent = chrome.i18n.getMessage('repeatWeekly');
   document.getElementById('repeat-monthly')!.textContent = chrome.i18n.getMessage('repeatMonthly');
   document.getElementById('repeat-yearly')!.textContent = chrome.i18n.getMessage('repeatYearly');
   upgradeBtn.textContent = chrome.i18n.getMessage('upgradeButton');
+  listContainer.replaceChildren(createStateMessage(chrome.i18n.getMessage('loadingState')));
 }
 
 function updateBadge(deadlines: Deadline[]) {
@@ -47,8 +49,18 @@ function updateBadge(deadlines: Deadline[]) {
   }
 }
 
-function formatDeadlineStatus(deadline: Deadline): string {
-  const status = getDeadlineStatus(getDaysUntil(deadline.date));
+function setHidden(element: HTMLElement, hidden: boolean) {
+  element.classList.toggle('is-hidden', hidden);
+}
+
+function createStateMessage(message: string): HTMLDivElement {
+  const state = document.createElement('div');
+  state.className = 'state-message';
+  state.textContent = message;
+  return state;
+}
+
+function formatDeadlineStatus(status: DeadlineStatus): string {
   if (status.kind === 'overdue') {
     return chrome.i18n.getMessage('statusOverdue');
   }
@@ -58,58 +70,102 @@ function formatDeadlineStatus(deadline: Deadline): string {
   return chrome.i18n.getMessage('statusRemaining', [status.days.toString()]);
 }
 
+function getRepeatLabel(deadline: Deadline): string {
+  if (!deadline.repeat || deadline.repeat === 'none') {
+    return '';
+  }
+
+  return chrome.i18n.getMessage(`repeat${deadline.repeat.charAt(0).toUpperCase()}${deadline.repeat.slice(1)}`);
+}
+
+function createDeadlineItem(deadline: Deadline): HTMLDivElement {
+  const status = getDeadlineStatus(getDaysUntil(deadline.date));
+
+  const item = document.createElement('div');
+  item.className = 'deadline-item';
+
+  const main = document.createElement('div');
+  main.className = 'deadline-main';
+
+  const name = document.createElement('div');
+  name.className = 'deadline-name';
+  name.textContent = deadline.name;
+  main.appendChild(name);
+
+  const meta = document.createElement('div');
+  meta.className = 'deadline-meta';
+
+  const date = document.createElement('time');
+  date.dateTime = deadline.date;
+  date.textContent = deadline.date;
+  meta.appendChild(date);
+
+  const statusBadge = document.createElement('span');
+  statusBadge.className = `status-badge status-${status.kind}`;
+  statusBadge.textContent = formatDeadlineStatus(status);
+  meta.appendChild(statusBadge);
+
+  const repeatLabel = getRepeatLabel(deadline);
+  if (repeatLabel) {
+    const repeat = document.createElement('span');
+    repeat.className = 'repeat-badge';
+    repeat.textContent = repeatLabel;
+    meta.appendChild(repeat);
+  }
+
+  main.appendChild(meta);
+  item.appendChild(main);
+
+  const actions = document.createElement('div');
+  actions.className = 'deadline-actions';
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'icon-button danger-button';
+  delBtn.textContent = chrome.i18n.getMessage('deleteButton');
+  delBtn.onclick = async () => {
+    const current = await getDeadlines();
+    const filtered = current.filter((item) => item.id !== deadline.id);
+    await setDeadlines(filtered);
+    renderDeadlines(filtered);
+  };
+  actions.appendChild(delBtn);
+
+  if (deadline.repeat && deadline.repeat !== 'none') {
+    const doneBtn = document.createElement('button');
+    doneBtn.className = 'icon-button';
+    doneBtn.textContent = '✓';
+    doneBtn.title = chrome.i18n.getMessage('nextOccurrenceButtonTitle');
+    doneBtn.onclick = async () => {
+      const current = await getDeadlines();
+      const updated = current.map((item) => {
+        if (item.id === deadline.id) {
+          return { ...item, date: getNextDate(item.date, item.repeat) };
+        }
+        return item;
+      });
+      await setDeadlines(updated);
+      renderDeadlines(updated);
+    };
+    actions.appendChild(doneBtn);
+  }
+
+  item.appendChild(actions);
+  return item;
+}
+
 function renderDeadlines(deadlines: Deadline[]) {
   const sortedDeadlines = sortDeadlinesByDate(deadlines);
 
   updateBadge(sortedDeadlines);
-  listContainer.innerHTML = '';
+  listContainer.replaceChildren();
 
-  sortedDeadlines.forEach((d) => {
-    const status = formatDeadlineStatus(d);
+  if (sortedDeadlines.length === 0) {
+    listContainer.appendChild(createStateMessage(chrome.i18n.getMessage('emptyState')));
+    return;
+  }
 
-    const item = document.createElement('div');
-    item.style.padding = '5px';
-    item.style.borderBottom = '1px solid #ccc';
-    item.style.display = 'flex';
-    item.style.justifyContent = 'space-between';
-    item.style.alignItems = 'center';
-
-    const text = document.createElement('span');
-    const repeatLabel = d.repeat && d.repeat !== 'none' ? ` [${chrome.i18n.getMessage('repeat' + d.repeat.charAt(0).toUpperCase() + d.repeat.slice(1))}]` : '';
-    text.textContent = `${d.name} - ${d.date}${repeatLabel} (${status})`;
-    item.appendChild(text);
-
-    const delBtn = document.createElement('button');
-    delBtn.textContent = chrome.i18n.getMessage('deleteButton');
-    delBtn.style.marginLeft = '5px';
-    delBtn.onclick = async () => {
-      const current = await getDeadlines();
-      const filtered = current.filter((item) => item.id !== d.id);
-      await setDeadlines(filtered);
-      renderDeadlines(filtered);
-    };
-    item.appendChild(delBtn);
-
-    if (d.repeat && d.repeat !== 'none') {
-      const doneBtn = document.createElement('button');
-      doneBtn.textContent = '✓';
-      doneBtn.style.marginLeft = '5px';
-      doneBtn.title = 'Next occurrence';
-      doneBtn.onclick = async () => {
-        const current = await getDeadlines();
-        const updated = current.map((item) => {
-          if (item.id === d.id) {
-            return { ...item, date: getNextDate(item.date, item.repeat) };
-          }
-          return item;
-        });
-        await setDeadlines(updated);
-        renderDeadlines(updated);
-      };
-      item.appendChild(doneBtn);
-    }
-
-    listContainer.appendChild(item);
+  sortedDeadlines.forEach((deadline) => {
+    listContainer.appendChild(createDeadlineItem(deadline));
   });
 }
 
@@ -119,13 +175,13 @@ async function checkPremium() {
 
   if (snapshot.isPremium) {
     trialStatus.textContent = chrome.i18n.getMessage('premiumActive');
-    upgradeBtn.style.display = 'none';
-    repeatSelect.style.display = 'block';
+    setHidden(upgradeBtn, true);
+    setHidden(repeatSelect, false);
   } else {
     const remainingTrial = getRemainingTrialDays(trialStart);
     trialStatus.textContent = chrome.i18n.getMessage('trialDaysLeft', [remainingTrial.toString()]);
-    upgradeBtn.style.display = 'inline-block';
-    repeatSelect.style.display = 'none';
+    setHidden(upgradeBtn, false);
+    setHidden(repeatSelect, true);
   }
   renderDeadlines(snapshot.deadlines);
 }
@@ -164,5 +220,5 @@ addBtn.addEventListener('click', async () => {
   renderDeadlines(updated);
 });
 
-checkPremium();
 initI18n();
+void checkPremium();

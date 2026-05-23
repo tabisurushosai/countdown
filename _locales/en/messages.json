@@ -25,5 +25,8 @@
     "days": { "content": "$1" }
   }
   },
-  "limitReached": { "message": "Free limit reached (max 5). Upgrade for unlimited!" }
+  "limitReached": { "message": "Free limit reached (max 5). Upgrade for unlimited!" },
+  "loadingState": { "message": "Loading..." },
+  "emptyState": { "message": "No deadlines yet" },
+  "nextOccurrenceButtonTitle": { "message": "Move to the next occurrence" }
   }
