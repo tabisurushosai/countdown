@@ -40,12 +40,16 @@ function updateBadge(deadlines: Deadline[]) {
 }
 
 function renderDeadlines(deadlines: Deadline[]) {
-  updateBadge(deadlines);
+  const sortedDeadlines = [...deadlines].sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  });
+
+  updateBadge(sortedDeadlines);
   listContainer.innerHTML = '';
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
-  deadlines.forEach((d) => {
+  sortedDeadlines.forEach((d) => {
     const target = new Date(d.date);
     target.setHours(0, 0, 0, 0);
     const diffMs = target.getTime() - now.getTime();
