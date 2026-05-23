@@ -1,6 +1,6 @@
 # countdown TODO (細粒度)
 - [x] T001: popup.html/src/popup.ts に締切(名前+日付)入力欄+追加ボタンを置き、storage.localの配列に保存・一覧表示するだけ
-- [ ] T002: 各締切の残り日数を計算して一覧に表示(過ぎたら「超過」)
+- [x] T002: 各締切の残り日数を計算して一覧に表示(過ぎたら「超過」)
 - [ ] T003: 各締切の削除ボタン
 - [ ] T004: 残り日数が最小の締切をアイコンバッジに表示(chrome.action.setBadgeText)
 - [ ] T005: 残り3日以内はバッジ色を赤に(setBadgeBackgroundColor)

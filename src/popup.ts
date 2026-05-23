@@ -11,11 +11,28 @@ const listContainer = document.getElementById('deadline-list') as HTMLDivElement
 
 function renderDeadlines(deadlines: Deadline[]) {
   listContainer.innerHTML = '';
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+
   deadlines.forEach((d) => {
+    const target = new Date(d.date);
+    target.setHours(0, 0, 0, 0);
+    const diffMs = target.getTime() - now.getTime();
+    const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+    let status = '';
+    if (diffDays < 0) {
+      status = '超過';
+    } else if (diffDays === 0) {
+      status = '今日';
+    } else {
+      status = `残り ${diffDays} 日`;
+    }
+
     const item = document.createElement('div');
     item.style.padding = '5px';
     item.style.borderBottom = '1px solid #ccc';
-    item.textContent = `${d.name} - ${d.date}`;
+    item.textContent = `${d.name} - ${d.date} (${status})`;
     listContainer.appendChild(item);
   });
 }
