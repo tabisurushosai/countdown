@@ -1,4 +1,21 @@
-import { Deadline } from './types';
+import {
+  canAddDeadline,
+  getBadgeState,
+  getDeadlineStatus,
+  getDaysUntil,
+  getNextDate,
+  getRemainingTrialDays,
+  getSavedRepeat,
+  sortDeadlinesByDate,
+} from './core/deadlines';
+import {
+  ensureTrialStart,
+  getCountdownSnapshot,
+  getDeadlines,
+  setDeadlines,
+  setPremium,
+} from './storage/deadlineStorage';
+import type { Deadline } from './types';
 
 const nameInput = document.getElementById('deadline-name') as HTMLInputElement;
 const dateInput = document.getElementById('deadline-date') as HTMLInputElement;
@@ -22,68 +39,33 @@ function initI18n() {
 }
 
 function updateBadge(deadlines: Deadline[]) {
-  if (deadlines.length === 0) {
-    chrome.action.setBadgeText({ text: '' });
-    return;
-  }
+  const badgeState = getBadgeState(deadlines);
+  chrome.action.setBadgeText({ text: badgeState.text });
 
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-
-  let minDiff = Infinity;
-  deadlines.forEach((d) => {
-    const target = new Date(d.date);
-    target.setHours(0, 0, 0, 0);
-    const diffMs = target.getTime() - now.getTime();
-    const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-    if (diffDays < minDiff) {
-      minDiff = diffDays;
-    }
-  });
-
-  const badgeText = minDiff < 0 ? '!' : minDiff.toString();
-  chrome.action.setBadgeText({ text: badgeText });
-
-  if (minDiff <= 3) {
-    chrome.action.setBadgeBackgroundColor({ color: '#FF0000' });
-  } else {
-    chrome.action.setBadgeBackgroundColor({ color: '#4688F1' });
+  if (badgeState.color) {
+    chrome.action.setBadgeBackgroundColor({ color: badgeState.color });
   }
 }
 
-function getNextDate(dateStr: string, repeat: string): string {
-  const date = new Date(dateStr);
-  if (repeat === 'weekly') {
-    date.setDate(date.getDate() + 7);
-  } else if (repeat === 'monthly') {
-    date.setMonth(date.getMonth() + 1);
-  } else if (repeat === 'yearly') {
-    date.setFullYear(date.getFullYear() + 1);
+function formatDeadlineStatus(deadline: Deadline): string {
+  const status = getDeadlineStatus(getDaysUntil(deadline.date));
+  if (status.kind === 'overdue') {
+    return chrome.i18n.getMessage('statusOverdue');
   }
-  return date.toISOString().split('T')[0];
+  if (status.kind === 'today') {
+    return chrome.i18n.getMessage('statusToday');
+  }
+  return chrome.i18n.getMessage('statusRemaining', [status.days.toString()]);
 }
 
 function renderDeadlines(deadlines: Deadline[]) {
-  const sortedDeadlines = [...deadlines].sort((a, b) => {
-    return new Date(a.date).getTime() - new Date(b.date).getTime();
-  });
+  const sortedDeadlines = sortDeadlinesByDate(deadlines);
 
   updateBadge(sortedDeadlines);
   listContainer.innerHTML = '';
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
 
   sortedDeadlines.forEach((d) => {
-    const target = new Date(d.date);
-    target.setHours(0, 0, 0, 0);
-    const diffMs = target.getTime() - now.getTime();
-    const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-
-    const status = diffDays < 0
-      ? chrome.i18n.getMessage('statusOverdue')
-      : diffDays === 0
-        ? chrome.i18n.getMessage('statusToday')
-        : chrome.i18n.getMessage('statusRemaining', [diffDays.toString()]);
+    const status = formatDeadlineStatus(d);
 
     const item = document.createElement('div');
     item.style.padding = '5px';
@@ -100,14 +82,11 @@ function renderDeadlines(deadlines: Deadline[]) {
     const delBtn = document.createElement('button');
     delBtn.textContent = chrome.i18n.getMessage('deleteButton');
     delBtn.style.marginLeft = '5px';
-    delBtn.onclick = () => {
-      chrome.storage.local.get(['deadlines'], (result) => {
-        const current: Deadline[] = result.deadlines || [];
-        const filtered = current.filter((item) => item.id !== d.id);
-        chrome.storage.local.set({ deadlines: filtered }, () => {
-          renderDeadlines(filtered);
-        });
-      });
+    delBtn.onclick = async () => {
+      const current = await getDeadlines();
+      const filtered = current.filter((item) => item.id !== d.id);
+      await setDeadlines(filtered);
+      renderDeadlines(filtered);
     };
     item.appendChild(delBtn);
 
@@ -116,19 +95,16 @@ function renderDeadlines(deadlines: Deadline[]) {
       doneBtn.textContent = '✓';
       doneBtn.style.marginLeft = '5px';
       doneBtn.title = 'Next occurrence';
-      doneBtn.onclick = () => {
-        chrome.storage.local.get(['deadlines'], (result) => {
-          const current: Deadline[] = result.deadlines || [];
-          const updated = current.map((item) => {
-            if (item.id === d.id) {
-              return { ...item, date: getNextDate(item.date, item.repeat!) };
-            }
-            return item;
-          });
-          chrome.storage.local.set({ deadlines: updated }, () => {
-            renderDeadlines(updated);
-          });
+      doneBtn.onclick = async () => {
+        const current = await getDeadlines();
+        const updated = current.map((item) => {
+          if (item.id === d.id) {
+            return { ...item, date: getNextDate(item.date, item.repeat) };
+          }
+          return item;
         });
+        await setDeadlines(updated);
+        renderDeadlines(updated);
       };
       item.appendChild(doneBtn);
     }
@@ -137,69 +113,55 @@ function renderDeadlines(deadlines: Deadline[]) {
   });
 }
 
-function checkPremium() {
-  chrome.storage.local.get(['isPremium', 'trial_start_ts', 'deadlines'], (result) => {
-    const isPremium = result.isPremium || false;
-    let trialStart = result.trial_start_ts;
-    const deadlines = result.deadlines || [];
+async function checkPremium() {
+  const snapshot = await getCountdownSnapshot();
+  const trialStart = snapshot.trialStartTs || await ensureTrialStart();
 
-    if (!trialStart) {
-      trialStart = Date.now();
-      chrome.storage.local.set({ trial_start_ts: trialStart });
-    }
-
-    if (isPremium) {
-      trialStatus.textContent = chrome.i18n.getMessage('premiumActive');
-      upgradeBtn.style.display = 'none';
-      repeatSelect.style.display = 'block';
-    } else {
-      const elapsedDays = Math.floor((Date.now() - trialStart) / (1000 * 60 * 60 * 24));
-      const remainingTrial = Math.max(0, 7 - elapsedDays);
-      trialStatus.textContent = chrome.i18n.getMessage('trialDaysLeft', [remainingTrial.toString()]);
-      upgradeBtn.style.display = 'inline-block';
-      repeatSelect.style.display = 'none';
-    }
-    renderDeadlines(deadlines);
-  });
+  if (snapshot.isPremium) {
+    trialStatus.textContent = chrome.i18n.getMessage('premiumActive');
+    upgradeBtn.style.display = 'none';
+    repeatSelect.style.display = 'block';
+  } else {
+    const remainingTrial = getRemainingTrialDays(trialStart);
+    trialStatus.textContent = chrome.i18n.getMessage('trialDaysLeft', [remainingTrial.toString()]);
+    upgradeBtn.style.display = 'inline-block';
+    repeatSelect.style.display = 'none';
+  }
+  renderDeadlines(snapshot.deadlines);
 }
 
-upgradeBtn.onclick = () => {
+upgradeBtn.onclick = async () => {
   // Simulate Stripe checkout
-  chrome.storage.local.set({ isPremium: true }, () => {
-    checkPremium();
-  });
+  await setPremium(true);
+  await checkPremium();
 };
 
-addBtn.addEventListener('click', () => {
+addBtn.addEventListener('click', async () => {
   const name = nameInput.value.trim();
   const date = dateInput.value;
   const repeat = repeatSelect.value as Deadline['repeat'];
 
   if (!name || !date) return;
 
-  chrome.storage.local.get(['deadlines', 'isPremium'], (result) => {
-    const deadlines: Deadline[] = result.deadlines || [];
-    const isPremium = result.isPremium || false;
+  const snapshot = await getCountdownSnapshot();
 
-    if (!isPremium && deadlines.length >= 5) {
-      alert(chrome.i18n.getMessage('limitReached'));
-      return;
-    }
+  if (!canAddDeadline(snapshot.isPremium, snapshot.deadlines.length)) {
+    alert(chrome.i18n.getMessage('limitReached'));
+    return;
+  }
 
-    const newDeadline: Deadline = {
-      id: crypto.randomUUID(),
-      name,
-      date,
-      repeat: isPremium ? repeat : 'none',
-    };
-    const updated = [...deadlines, newDeadline];
-    chrome.storage.local.set({ deadlines: updated }, () => {
-      nameInput.value = '';
-      dateInput.value = '';
-      repeatSelect.value = 'none';
-      renderDeadlines(updated);
-    });
-  });
+  const newDeadline: Deadline = {
+    id: crypto.randomUUID(),
+    name,
+    date,
+    repeat: getSavedRepeat(snapshot.isPremium, repeat),
+  };
+  const updated = [...snapshot.deadlines, newDeadline];
+  await setDeadlines(updated);
+  nameInput.value = '';
+  dateInput.value = '';
+  repeatSelect.value = 'none';
+  renderDeadlines(updated);
 });
 
 checkPremium();
