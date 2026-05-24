@@ -8,13 +8,13 @@
     <main class="app-shell">
         <header class="app-header">
             <h1 id="title">締切カウントダウン</h1>
-            <p id="onboarding-guide" class="onboarding-guide is-hidden">はじめての締切は、名前と日付を入れて「追加」を押すだけです。</p>
+            <p id="onboarding-guide" class="onboarding-guide is-hidden">締切名と締切日を入力して「追加」を押すと、一覧とバッジに残り日数が表示されます。</p>
         </header>
 
         <form id="input-form" class="deadline-form">
-            <label id="deadline-name-label" for="deadline-name" class="field-label">名前</label>
-            <input type="text" id="deadline-name" placeholder="名前" autocomplete="off" aria-required="true">
-            <label id="deadline-date-label" for="deadline-date" class="field-label">日付</label>
+            <label id="deadline-name-label" for="deadline-name" class="field-label">締切名</label>
+            <input type="text" id="deadline-name" placeholder="例: レポート提出" autocomplete="off" aria-required="true">
+            <label id="deadline-date-label" for="deadline-date" class="field-label">締切日</label>
             <input type="date" id="deadline-date" aria-required="true">
             <label id="deadline-repeat-label" for="deadline-repeat" class="field-label is-hidden">繰り返し</label>
             <select id="deadline-repeat" class="is-hidden">

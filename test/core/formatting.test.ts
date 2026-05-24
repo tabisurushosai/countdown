@@ -11,7 +11,7 @@ describe('formatInteger', () => {
 
 describe('formatDisplayDate', () => {
   it('formats stored dates for display by locale', () => {
-    expect(formatDisplayDate('2026-05-24', 'ja')).toBe('2026年5月24日(日)');
+    expect(formatDisplayDate('2026-05-24', 'ja')).toBe('2026年5月24日（日）');
     expect(formatDisplayDate('2026-05-24', 'en')).toBe('Sun, May 24, 2026');
   });
 

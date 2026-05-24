@@ -1,6 +1,6 @@
 {
   "extName": { "message": "Deadline Countdown" },
-  "extDesc": { "message": "Shows the days left until your deadlines on the toolbar icon." },
+  "extDesc": { "message": "Shows deadline countdowns on the toolbar icon so you do not miss due dates." },
   "title": { "message": "Deadline Countdown" },
   "nameLabel": { "message": "Deadline name" },
   "dateLabel": { "message": "Due date" },
@@ -8,11 +8,11 @@
   "deadlineListLabel": { "message": "Your deadlines" },
   "premiumInfoLabel": { "message": "Premium status" },
   "namePlaceholder": { "message": "e.g. Submit report" },
-  "onboardingGuide": { "message": "Enter a deadline name and due date, then choose Add." },
+  "onboardingGuide": { "message": "Enter a deadline name and due date, then choose Add to show the countdown in the list and badge." },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
   "deleteDeadlineButtonLabel": {
-  "message": "Delete $NAME$",
+  "message": "Delete deadline: $NAME$",
   "placeholders": {
     "name": { "content": "$1" }
   }
@@ -61,7 +61,7 @@
   }
   },
   "limitReached": {
-  "message": "The free plan supports up to $LIMIT$ deadlines. Upgrade to Premium for unlimited deadlines.",
+  "message": "The free plan supports up to $LIMIT$ deadlines. Premium removes the limit and enables repeating deadlines.",
   "placeholders": {
     "limit": { "content": "$1" }
   }
@@ -73,7 +73,7 @@
   "emptyStateHint": { "message": "Use the fields above to get started." },
   "nextOccurrenceButtonTitle": { "message": "Move to next occurrence" },
   "nextOccurrenceButtonLabel": {
-  "message": "Move $NAME$ to the next occurrence",
+  "message": "Move deadline to next occurrence: $NAME$",
   "placeholders": {
     "name": { "content": "$1" }
   }

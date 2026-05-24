@@ -1,14 +1,14 @@
 {
   "extName": { "message": "締切カウントダウン" },
-  "extDesc": { "message": "締切までの残り日数をツールバーのアイコンに表示し、予定忘れを防ぎます。" },
+  "extDesc": { "message": "締切までの残り日数をツールバーのアイコンに表示し、締切忘れを防ぎます。" },
   "title": { "message": "締切カウントダウン" },
   "nameLabel": { "message": "締切名" },
   "dateLabel": { "message": "締切日" },
   "repeatLabel": { "message": "繰り返し" },
-  "deadlineListLabel": { "message": "登録した締切" },
+  "deadlineListLabel": { "message": "締切一覧" },
   "premiumInfoLabel": { "message": "Premiumの状態" },
   "namePlaceholder": { "message": "例: レポート提出" },
-  "onboardingGuide": { "message": "締切名と日付を入力し、「追加」を押すと登録できます。" },
+  "onboardingGuide": { "message": "締切名と締切日を入力して「追加」を押すと、一覧とバッジに残り日数が表示されます。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
@@ -29,15 +29,15 @@
     "days": { "content": "$1" }
   }
   },
-  "statusToday": { "message": "今日が締切" },
+  "statusToday": { "message": "今日が締切です" },
   "statusRemainingOne": {
-  "message": "残り$DAYS$日",
+  "message": "締切まで残り$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusRemaining": {
-  "message": "残り$DAYS$日",
+  "message": "締切まで残り$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
@@ -61,7 +61,7 @@
   }
   },
   "limitReached": {
-  "message": "無料版で登録できる締切は最大$LIMIT$件です。無制限で使うにはPremiumにアップグレードしてください。",
+  "message": "無料版で登録できる締切は最大$LIMIT$件です。Premiumでは締切数の上限がなくなり、繰り返しも使えます。",
   "placeholders": {
     "limit": { "content": "$1" }
   }
@@ -71,9 +71,9 @@
   "emptyStateTitle": { "message": "最初の締切を追加しましょう" },
   "emptyStateBody": { "message": "追加すると、一覧とツールバーのバッジに残り日数が表示されます。" },
   "emptyStateHint": { "message": "入力欄はこの画面の上部にあります。" },
-  "nextOccurrenceButtonTitle": { "message": "次の予定日に進める" },
+  "nextOccurrenceButtonTitle": { "message": "次回の締切日に進める" },
   "nextOccurrenceButtonLabel": {
-  "message": "「$NAME$」を次の予定日に進める",
+  "message": "「$NAME$」を次回の締切日に進める",
   "placeholders": {
     "name": { "content": "$1" }
   }
