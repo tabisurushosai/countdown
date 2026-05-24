@@ -124,6 +124,16 @@ function createEmptyStateMessage(): HTMLDivElement {
   hint.textContent = chrome.i18n.getMessage('emptyStateHint');
   state.appendChild(hint);
 
+  const action = document.createElement('button');
+  action.className = 'secondary-button empty-state-action';
+  action.type = 'button';
+  action.textContent = chrome.i18n.getMessage('emptyStateAction');
+  action.setAttribute('aria-controls', nameInput.id);
+  action.addEventListener('click', () => {
+    nameInput.focus();
+  });
+  state.appendChild(action);
+
   return state;
 }
 
