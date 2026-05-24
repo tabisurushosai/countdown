@@ -67,7 +67,6 @@
   }
   },
   "loadingState": { "message": "読み込み中..." },
-  "emptyState": { "message": "まだ締切はありません" },
   "emptyStateTitle": { "message": "まだ締切はありません" },
   "emptyStateBody": { "message": "最初の締切を追加すると、ここに日付が近い順で表示されます。" },
   "emptyStateHint": { "message": "迷ったら、上の「締切名」と「締切日」から始めてください。" },
