@@ -1,4 +1,4 @@
-import type { Deadline, DeadlineRepeat } from '../types';
+import type { Deadline, DeadlineRepeat } from './types';
 
 const DAY_MS = 1000 * 60 * 60 * 24;
 export const FREE_DEADLINE_LIMIT = 5;

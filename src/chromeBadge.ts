@@ -1,5 +1,5 @@
 import { getBadgeState } from './core/deadlines';
-import type { Deadline } from './types';
+import type { Deadline } from './core/types';
 
 export function updateChromeBadge(deadlines: readonly Deadline[]): void {
   const badgeState = getBadgeState(deadlines);

@@ -18,8 +18,7 @@ import {
   setDeadlines,
   setPremium,
 } from './storage/chromeDeadlineStorage';
-import { isDeadlineRepeat } from './types';
-import type { Deadline, DeadlineRepeat } from './types';
+import { isDeadlineRepeat, type Deadline, type DeadlineRepeat } from './core/types';
 
 const REPEAT_LABEL_MESSAGE_KEYS: Record<Exclude<DeadlineRepeat, 'none'>, string> = {
   weekly: 'repeatWeekly',
