@@ -11,13 +11,7 @@ import {
 } from './core/deadlines';
 import { formatDisplayDate, formatInteger, type DisplayLocale } from './core/formatting';
 import { updateChromeBadge } from './chromeBadge';
-import {
-  ensureTrialStart,
-  getCountdownSnapshot,
-  getDeadlines,
-  setDeadlines,
-  setPremium,
-} from './storage/chromeDeadlineStorage';
+import { chromeDeadlineStorage } from './storage/chromeDeadlineStorage';
 import { isDeadlineRepeat, type Deadline, type DeadlineRepeat } from './core/types';
 
 const REPEAT_LABEL_MESSAGE_KEYS: Record<Exclude<DeadlineRepeat, 'none'>, string> = {
@@ -204,9 +198,9 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
   delBtn.textContent = chrome.i18n.getMessage('deleteButton');
   delBtn.setAttribute('aria-label', chrome.i18n.getMessage('deleteDeadlineButtonLabel', [deadline.name]));
   delBtn.onclick = async () => {
-    const current = await getDeadlines();
+    const current = await chromeDeadlineStorage.getDeadlines();
     const filtered = current.filter((item) => item.id !== deadline.id);
-    await setDeadlines(filtered);
+    await chromeDeadlineStorage.setDeadlines(filtered);
     renderDeadlines(filtered);
     focusDeadlineList();
   };
@@ -220,14 +214,14 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
     doneBtn.title = chrome.i18n.getMessage('nextOccurrenceButtonTitle');
     doneBtn.setAttribute('aria-label', chrome.i18n.getMessage('nextOccurrenceButtonLabel', [deadline.name]));
     doneBtn.onclick = async () => {
-      const current = await getDeadlines();
+      const current = await chromeDeadlineStorage.getDeadlines();
       const updated = current.map((item) => {
         if (item.id === deadline.id) {
           return { ...item, date: getNextDate(item.date, item.repeat) };
         }
         return item;
       });
-      await setDeadlines(updated);
+      await chromeDeadlineStorage.setDeadlines(updated);
       renderDeadlines(updated);
       focusDeadlineList();
     };
@@ -258,8 +252,8 @@ function renderDeadlines(deadlines: readonly Deadline[]): void {
 }
 
 async function checkPremium(): Promise<void> {
-  const snapshot = await getCountdownSnapshot();
-  const trialStart = snapshot.trialStartTs || (await ensureTrialStart());
+  const snapshot = await chromeDeadlineStorage.getCountdownSnapshot();
+  const trialStart = snapshot.trialStartTs || (await chromeDeadlineStorage.ensureTrialStart());
 
   if (snapshot.isPremium) {
     trialStatus.textContent = chrome.i18n.getMessage('premiumActive');
@@ -279,7 +273,7 @@ async function checkPremium(): Promise<void> {
 
 upgradeBtn.onclick = async () => {
   // Simulate Stripe checkout
-  await setPremium(true);
+  await chromeDeadlineStorage.setPremium(true);
   await checkPremium();
 };
 
@@ -292,7 +286,7 @@ inputForm.addEventListener('submit', async (event) => {
 
   if (!name || !date) return;
 
-  const snapshot = await getCountdownSnapshot();
+  const snapshot = await chromeDeadlineStorage.getCountdownSnapshot();
 
   if (!canAddDeadline(snapshot.isPremium, snapshot.deadlines.length)) {
     alert(
@@ -310,7 +304,7 @@ inputForm.addEventListener('submit', async (event) => {
     repeat: getSavedRepeat(snapshot.isPremium, repeat),
   };
   const updated = [...snapshot.deadlines, newDeadline];
-  await setDeadlines(updated);
+  await chromeDeadlineStorage.setDeadlines(updated);
   nameInput.value = '';
   dateInput.value = '';
   repeatSelect.value = 'none';
