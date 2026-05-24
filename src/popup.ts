@@ -41,13 +41,21 @@ const nameInput = getRequiredElement('deadline-name', HTMLInputElement);
 const dateInput = getRequiredElement('deadline-date', HTMLInputElement);
 const repeatSelect = getRequiredElement('deadline-repeat', HTMLSelectElement);
 const addBtn = getRequiredElement('add-btn', HTMLButtonElement);
-const listContainer = getRequiredElement('deadline-list', HTMLDivElement);
+const inputForm = getRequiredElement('input-form', HTMLFormElement);
+const listContainer = getRequiredElement('deadline-list', HTMLElement);
 const trialStatus = getRequiredElement('trial-status', HTMLSpanElement);
 const upgradeBtn = getRequiredElement('upgrade-btn', HTMLButtonElement);
 
 function initI18n() {
+  document.documentElement.lang = chrome.i18n.getUILanguage().startsWith('ja') ? 'ja' : 'en';
+
   const titleEl = document.getElementById('title');
   if (titleEl) titleEl.textContent = chrome.i18n.getMessage('title');
+  setTextById('deadline-name-label', chrome.i18n.getMessage('nameLabel'));
+  setTextById('deadline-date-label', chrome.i18n.getMessage('dateLabel'));
+  setTextById('deadline-repeat-label', chrome.i18n.getMessage('repeatLabel'));
+  setTextById('deadline-list-title', chrome.i18n.getMessage('deadlineListLabel'));
+  setTextById('premium-info-title', chrome.i18n.getMessage('premiumInfoLabel'));
   nameInput.placeholder = chrome.i18n.getMessage('namePlaceholder');
   addBtn.textContent = chrome.i18n.getMessage('addButton');
 
@@ -56,6 +64,7 @@ function initI18n() {
   setTextById('repeat-monthly', chrome.i18n.getMessage('repeatMonthly'));
   setTextById('repeat-yearly', chrome.i18n.getMessage('repeatYearly'));
   upgradeBtn.textContent = chrome.i18n.getMessage('upgradeButton');
+  listContainer.removeAttribute('role');
   listContainer.replaceChildren(createStateMessage(chrome.i18n.getMessage('loadingState')));
 }
 
@@ -66,6 +75,7 @@ function setHidden(element: HTMLElement, hidden: boolean) {
 function createStateMessage(message: string): HTMLDivElement {
   const state = document.createElement('div');
   state.className = 'state-message';
+  state.setAttribute('role', 'status');
   state.textContent = message;
   return state;
 }
@@ -94,6 +104,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
 
   const item = document.createElement('div');
   item.className = 'deadline-item';
+  item.setAttribute('role', 'listitem');
 
   const main = document.createElement('div');
   main.className = 'deadline-main';
@@ -132,7 +143,9 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
 
   const delBtn = document.createElement('button');
   delBtn.className = 'icon-button danger-button';
+  delBtn.type = 'button';
   delBtn.textContent = chrome.i18n.getMessage('deleteButton');
+  delBtn.setAttribute('aria-label', chrome.i18n.getMessage('deleteDeadlineButtonLabel', [deadline.name]));
   delBtn.onclick = async () => {
     const current = await getDeadlines();
     const filtered = current.filter((item) => item.id !== deadline.id);
@@ -144,8 +157,10 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
   if (deadline.repeat && deadline.repeat !== 'none') {
     const doneBtn = document.createElement('button');
     doneBtn.className = 'icon-button';
+    doneBtn.type = 'button';
     doneBtn.textContent = '✓';
     doneBtn.title = chrome.i18n.getMessage('nextOccurrenceButtonTitle');
+    doneBtn.setAttribute('aria-label', chrome.i18n.getMessage('nextOccurrenceButtonLabel', [deadline.name]));
     doneBtn.onclick = async () => {
       const current = await getDeadlines();
       const updated = current.map((item) => {
@@ -171,10 +186,12 @@ function renderDeadlines(deadlines: Deadline[]) {
   listContainer.replaceChildren();
 
   if (sortedDeadlines.length === 0) {
+    listContainer.removeAttribute('role');
     listContainer.appendChild(createStateMessage(chrome.i18n.getMessage('emptyState')));
     return;
   }
 
+  listContainer.setAttribute('role', 'list');
   sortedDeadlines.forEach((deadline) => {
     listContainer.appendChild(createDeadlineItem(deadline));
   });
@@ -203,7 +220,9 @@ upgradeBtn.onclick = async () => {
   await checkPremium();
 };
 
-addBtn.addEventListener('click', async () => {
+inputForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
   const name = nameInput.value.trim();
   const date = dateInput.value;
   const repeat = isDeadlineRepeat(repeatSelect.value) ? repeatSelect.value : 'none';

@@ -2,9 +2,20 @@
   "extName": { "message": "Deadline Countdown" },
   "extDesc": { "message": "Shows days left until your deadlines on the toolbar icon." },
   "title": { "message": "Deadline Countdown" },
+  "nameLabel": { "message": "Deadline name" },
+  "dateLabel": { "message": "Deadline date" },
+  "repeatLabel": { "message": "Repeat" },
+  "deadlineListLabel": { "message": "Deadline list" },
+  "premiumInfoLabel": { "message": "Premium information" },
   "namePlaceholder": { "message": "Name" },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
+  "deleteDeadlineButtonLabel": {
+  "message": "Delete $NAME$",
+  "placeholders": {
+    "name": { "content": "$1" }
+  }
+  },
   "statusOverdue": { "message": "Overdue" },
   "statusToday": { "message": "Today" },
   "statusRemaining": {
@@ -28,5 +39,11 @@
   "limitReached": { "message": "Free limit reached (max 5). Upgrade for unlimited!" },
   "loadingState": { "message": "Loading..." },
   "emptyState": { "message": "No deadlines yet" },
-  "nextOccurrenceButtonTitle": { "message": "Move to the next occurrence" }
+  "nextOccurrenceButtonTitle": { "message": "Move to the next occurrence" },
+  "nextOccurrenceButtonLabel": {
+  "message": "Move $NAME$ to the next occurrence",
+  "placeholders": {
+    "name": { "content": "$1" }
+  }
+  }
   }
