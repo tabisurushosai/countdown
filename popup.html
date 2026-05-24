@@ -11,11 +11,11 @@
             <p id="onboarding-guide" class="onboarding-guide is-hidden">まず締切名と日付を入れて追加しましょう。</p>
         </header>
 
-        <form id="input-form" class="deadline-form">
+        <form id="input-form" class="deadline-form" aria-describedby="onboarding-guide">
             <label id="deadline-name-label" for="deadline-name" class="sr-only">名前</label>
-            <input type="text" id="deadline-name" placeholder="名前" autocomplete="off">
+            <input type="text" id="deadline-name" placeholder="名前" autocomplete="off" aria-required="true">
             <label id="deadline-date-label" for="deadline-date" class="sr-only">日付</label>
-            <input type="date" id="deadline-date">
+            <input type="date" id="deadline-date" aria-required="true">
             <label id="deadline-repeat-label" for="deadline-repeat" class="sr-only">繰り返し</label>
             <select id="deadline-repeat" class="is-hidden">
                 <option value="none" id="repeat-none">None</option>
@@ -23,19 +23,19 @@
                 <option value="monthly" id="repeat-monthly">Monthly</option>
                 <option value="yearly" id="repeat-yearly">Yearly</option>
             </select>
-            <button id="add-btn" class="primary-button" type="submit">追加</button>
+            <button id="add-btn" class="primary-button" type="submit" aria-controls="deadline-list">追加</button>
         </form>
 
         <section class="deadline-list" aria-labelledby="deadline-list-title">
             <h2 id="deadline-list-title" class="sr-only">締切一覧</h2>
-            <div id="deadline-list" class="deadline-items" aria-live="polite">
-                <div class="state-message">読み込み中...</div>
+            <div id="deadline-list" class="deadline-items" aria-live="polite" aria-atomic="false" tabindex="-1">
+                <div class="state-message" role="status">読み込み中...</div>
             </div>
         </section>
 
         <section id="premium-info" class="premium-info" aria-labelledby="premium-info-title">
             <h2 id="premium-info-title" class="sr-only">Premium情報</h2>
-            <span id="trial-status"></span>
+            <span id="trial-status" role="status" aria-live="polite" aria-atomic="true"></span>
             <button id="upgrade-btn" class="secondary-button is-hidden" type="button">Upgrade to Premium</button>
         </section>
     </main>
