@@ -16,7 +16,7 @@ import {
   getDeadlines,
   setDeadlines,
   setPremium,
-} from './storage/deadlineStorage';
+} from './storage/chromeDeadlineStorage';
 import { isDeadlineRepeat } from './types';
 import type { Deadline, DeadlineRepeat } from './types';
 

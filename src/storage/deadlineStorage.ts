@@ -1,5 +1,4 @@
 import type { Deadline } from '../types';
-import { chromeLocalStorageAdapter } from './chromeLocalStorageAdapter';
 import {
   DEADLINES_KEY,
   IS_PREMIUM_KEY,
@@ -13,23 +12,19 @@ export interface CountdownSnapshot {
   trialStartTs: number | undefined;
 }
 
-export async function getDeadlines(
-  storage: CountdownStorageAdapter = chromeLocalStorageAdapter,
-): Promise<Deadline[]> {
+export async function getDeadlines(storage: CountdownStorageAdapter): Promise<Deadline[]> {
   const result = await storage.get([DEADLINES_KEY]);
   return result.deadlines || [];
 }
 
 export async function setDeadlines(
   deadlines: Deadline[],
-  storage: CountdownStorageAdapter = chromeLocalStorageAdapter,
+  storage: CountdownStorageAdapter,
 ): Promise<void> {
   await storage.set({ deadlines });
 }
 
-export async function getCountdownSnapshot(
-  storage: CountdownStorageAdapter = chromeLocalStorageAdapter,
-): Promise<CountdownSnapshot> {
+export async function getCountdownSnapshot(storage: CountdownStorageAdapter): Promise<CountdownSnapshot> {
   const result = await storage.get([DEADLINES_KEY, IS_PREMIUM_KEY, TRIAL_START_KEY]);
   return {
     deadlines: result.deadlines || [],
@@ -39,8 +34,8 @@ export async function getCountdownSnapshot(
 }
 
 export async function ensureTrialStart(
+  storage: CountdownStorageAdapter,
   nowTs = Date.now(),
-  storage: CountdownStorageAdapter = chromeLocalStorageAdapter,
 ): Promise<number> {
   const result = await storage.get([TRIAL_START_KEY]);
   if (result.trial_start_ts) {
@@ -53,7 +48,7 @@ export async function ensureTrialStart(
 
 export async function setPremium(
   isPremium: boolean,
-  storage: CountdownStorageAdapter = chromeLocalStorageAdapter,
+  storage: CountdownStorageAdapter,
 ): Promise<void> {
   await storage.set({ isPremium });
 }

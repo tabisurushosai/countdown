@@ -12,11 +12,21 @@ export interface CountdownStorageSchema {
 
 export type CountdownStorageKey = keyof CountdownStorageSchema;
 export type CountdownStorageValues = Partial<CountdownStorageSchema>;
-export type CountdownStorageSelection<Key extends readonly CountdownStorageKey[]> = Partial<
-  Pick<CountdownStorageSchema, Key[number]>
+export type StorageSchemaKey<Schema extends object> = Extract<keyof Schema, string>;
+export type StorageSelection<
+  Schema extends object,
+  Key extends readonly StorageSchemaKey<Schema>[],
+> = Partial<Pick<Schema, Key[number]>>;
+export type CountdownStorageSelection<Key extends readonly CountdownStorageKey[]> = StorageSelection<
+  CountdownStorageSchema,
+  Key
 >;
 
-export interface CountdownStorageAdapter {
-  get<const Key extends readonly CountdownStorageKey[]>(keys: Key): Promise<CountdownStorageSelection<Key>>;
-  set(values: CountdownStorageValues): Promise<void>;
+export interface StorageAdapter<Schema extends object> {
+  get<const Key extends readonly StorageSchemaKey<Schema>[]>(
+    keys: Key,
+  ): Promise<StorageSelection<Schema, Key>>;
+  set(values: Partial<Schema>): Promise<void>;
 }
+
+export type CountdownStorageAdapter = StorageAdapter<CountdownStorageSchema>;
