@@ -18,10 +18,10 @@
             <input type="date" id="deadline-date" aria-required="true">
             <label id="deadline-repeat-label" for="deadline-repeat" class="sr-only">繰り返し</label>
             <select id="deadline-repeat" class="is-hidden">
-                <option value="none" id="repeat-none">None</option>
-                <option value="weekly" id="repeat-weekly">Weekly</option>
-                <option value="monthly" id="repeat-monthly">Monthly</option>
-                <option value="yearly" id="repeat-yearly">Yearly</option>
+                <option value="none" id="repeat-none">繰り返しなし</option>
+                <option value="weekly" id="repeat-weekly">毎週</option>
+                <option value="monthly" id="repeat-monthly">毎月</option>
+                <option value="yearly" id="repeat-yearly">毎年</option>
             </select>
             <button id="add-btn" class="primary-button" type="submit" aria-controls="deadline-list">追加</button>
         </form>
@@ -34,9 +34,9 @@
         </section>
 
         <section id="premium-info" class="premium-info" aria-labelledby="premium-info-title">
-            <h2 id="premium-info-title" class="sr-only">Premium情報</h2>
+            <h2 id="premium-info-title" class="sr-only">Premiumの状態</h2>
             <span id="trial-status" role="status" aria-live="polite" aria-atomic="true"></span>
-            <button id="upgrade-btn" class="secondary-button is-hidden" type="button">Upgrade to Premium</button>
+            <button id="upgrade-btn" class="secondary-button is-hidden" type="button">Premiumにアップグレード</button>
         </section>
     </main>
     <script type="module" src="/src/popup.ts"></script>

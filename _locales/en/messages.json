@@ -7,8 +7,8 @@
   "repeatLabel": { "message": "Repeat" },
   "deadlineListLabel": { "message": "Deadlines" },
   "premiumInfoLabel": { "message": "Premium status" },
-  "namePlaceholder": { "message": "Deadline name" },
-  "onboardingGuide": { "message": "For your first deadline, enter a name and date, then press Add." },
+  "namePlaceholder": { "message": "e.g. Submit report" },
+  "onboardingGuide": { "message": "Enter a name and date, then select Add." },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
   "deleteDeadlineButtonLabel": {
@@ -17,45 +17,50 @@
     "name": { "content": "$1" }
   }
   },
-  "statusOverdue": { "message": "Overdue" },
-  "statusToday": { "message": "Today" },
+  "statusOverdue": { "message": "Past due" },
+  "statusToday": { "message": "Due today" },
   "statusRemainingOne": {
-  "message": "$DAYS$ day left",
+  "message": "$DAYS$ day remaining",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusRemaining": {
-  "message": "$DAYS$ days left",
+  "message": "$DAYS$ days remaining",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "repeatNone": { "message": "Does not repeat" },
-  "repeatWeekly": { "message": "Weekly" },
-  "repeatMonthly": { "message": "Monthly" },
-  "repeatYearly": { "message": "Yearly" },
+  "repeatNone": { "message": "No repeat" },
+  "repeatWeekly": { "message": "Every week" },
+  "repeatMonthly": { "message": "Every month" },
+  "repeatYearly": { "message": "Every year" },
   "upgradeButton": { "message": "Upgrade to Premium" },
   "premiumActive": { "message": "Premium is active" },
   "trialDaysLeftOne": {
-  "message": "$DAYS$ day left in your trial",
+  "message": "$DAYS$ day remaining in your trial",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "trialDaysLeft": {
-  "message": "$DAYS$ days left in your trial",
+  "message": "$DAYS$ days remaining in your trial",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "limitReached": { "message": "The free plan is limited to 5 deadlines. Upgrade to Premium for unlimited deadlines." },
+  "limitReached": {
+  "message": "The free plan supports up to $LIMIT$ deadlines. Upgrade to Premium for unlimited deadlines.",
+  "placeholders": {
+    "limit": { "content": "$1" }
+  }
+  },
   "loadingState": { "message": "Loading..." },
   "emptyState": { "message": "Add your first deadline" },
   "emptyStateTitle": { "message": "Add your first deadline" },
   "emptyStateBody": { "message": "After you add it, the list and toolbar badge will show the days remaining." },
   "emptyStateHint": { "message": "Use the fields above to get started." },
-  "nextOccurrenceButtonTitle": { "message": "Move to the next occurrence" },
+  "nextOccurrenceButtonTitle": { "message": "Move to next occurrence" },
   "nextOccurrenceButtonLabel": {
   "message": "Move $NAME$ to the next occurrence",
   "placeholders": {
