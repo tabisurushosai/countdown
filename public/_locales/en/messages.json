@@ -5,10 +5,10 @@
   "nameLabel": { "message": "Deadline name" },
   "dateLabel": { "message": "Due date" },
   "repeatLabel": { "message": "Repeat" },
-  "deadlineListLabel": { "message": "Your deadlines" },
+  "deadlineListLabel": { "message": "Saved deadlines" },
   "premiumInfoLabel": { "message": "Premium status" },
   "namePlaceholder": { "message": "e.g. Submit report" },
-  "onboardingGuide": { "message": "Enter a deadline name and due date, then choose Add to show the countdown in the list and badge." },
+  "onboardingGuide": { "message": "Enter a deadline name and due date, then select Add to show the countdown in the list and toolbar badge." },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
   "deleteDeadlineButtonLabel": {
@@ -29,7 +29,7 @@
     "days": { "content": "$1" }
   }
   },
-  "statusToday": { "message": "Due today" },
+  "statusToday": { "message": "Deadline is today" },
   "statusRemainingOne": {
   "message": "$DAYS$ day left",
   "placeholders": {
@@ -42,7 +42,7 @@
     "days": { "content": "$1" }
   }
   },
-  "repeatNone": { "message": "No repeat" },
+  "repeatNone": { "message": "Does not repeat" },
   "repeatWeekly": { "message": "Weekly" },
   "repeatMonthly": { "message": "Monthly" },
   "repeatYearly": { "message": "Yearly" },
@@ -69,12 +69,12 @@
   "loadingState": { "message": "Loading..." },
   "emptyState": { "message": "Add your first deadline" },
   "emptyStateTitle": { "message": "Add your first deadline" },
-  "emptyStateBody": { "message": "After you add it, the list and toolbar badge will show the days left." },
+  "emptyStateBody": { "message": "After you add a deadline, the list and toolbar badge will show the days left." },
   "emptyStateHint": { "message": "Use the fields above to get started." },
   "emptyStateAction": { "message": "Enter deadline name" },
-  "nextOccurrenceButtonTitle": { "message": "Move to next occurrence" },
+  "nextOccurrenceButtonTitle": { "message": "Move to the next due date" },
   "nextOccurrenceButtonLabel": {
-  "message": "Move deadline to next occurrence: $NAME$",
+  "message": "Move $NAME$ to the next due date",
   "placeholders": {
     "name": { "content": "$1" }
   }

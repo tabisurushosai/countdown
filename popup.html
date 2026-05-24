@@ -8,7 +8,7 @@
     <main class="app-shell">
         <header class="app-header">
             <h1 id="title">締切カウントダウン</h1>
-            <p id="onboarding-guide" class="onboarding-guide is-hidden">締切名と締切日を入力して「追加」を押すと、一覧とバッジに残り日数が表示されます。</p>
+            <p id="onboarding-guide" class="onboarding-guide is-hidden">締切名と締切日を入力して「追加」を押すと、一覧とツールバーのバッジに残り日数が表示されます。</p>
         </header>
 
         <form id="input-form" class="deadline-form">
@@ -27,14 +27,14 @@
         </form>
 
         <section class="deadline-list" aria-labelledby="deadline-list-title">
-            <h2 id="deadline-list-title" class="section-title">締切一覧</h2>
+            <h2 id="deadline-list-title" class="section-title">登録した締切</h2>
             <div id="deadline-list" class="deadline-items" aria-live="polite" aria-atomic="false" tabindex="-1">
                 <div class="state-message" role="status">読み込み中...</div>
             </div>
         </section>
 
         <section id="premium-info" class="premium-info" aria-labelledby="premium-info-title">
-            <h2 id="premium-info-title" class="sr-only">Premiumの状態</h2>
+            <h2 id="premium-info-title" class="sr-only">Premiumのステータス</h2>
             <span id="trial-status" role="status" aria-live="polite" aria-atomic="true"></span>
             <button id="upgrade-btn" class="secondary-button is-hidden" type="button">Premiumにアップグレード</button>
         </section>
