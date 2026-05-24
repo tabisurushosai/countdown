@@ -4,18 +4,19 @@ export const DEADLINES_KEY = 'deadlines';
 export const IS_PREMIUM_KEY = 'isPremium';
 export const TRIAL_START_KEY = 'trial_start_ts';
 
-export type CountdownStorageKey =
-  | typeof DEADLINES_KEY
-  | typeof IS_PREMIUM_KEY
-  | typeof TRIAL_START_KEY;
-
-export interface CountdownStorageValues {
-  deadlines?: Deadline[];
-  isPremium?: boolean;
-  trial_start_ts?: number;
+export interface CountdownStorageSchema {
+  [DEADLINES_KEY]: Deadline[];
+  [IS_PREMIUM_KEY]: boolean;
+  [TRIAL_START_KEY]: number;
 }
 
+export type CountdownStorageKey = keyof CountdownStorageSchema;
+export type CountdownStorageValues = Partial<CountdownStorageSchema>;
+export type CountdownStorageSelection<Key extends readonly CountdownStorageKey[]> = Partial<
+  Pick<CountdownStorageSchema, Key[number]>
+>;
+
 export interface CountdownStorageAdapter {
-  get(keys: readonly CountdownStorageKey[]): Promise<CountdownStorageValues>;
+  get<const Key extends readonly CountdownStorageKey[]>(keys: Key): Promise<CountdownStorageSelection<Key>>;
   set(values: CountdownStorageValues): Promise<void>;
 }

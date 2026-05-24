@@ -34,7 +34,7 @@ export function getDeadlineStatus(daysUntil: number): DeadlineStatus {
   return { kind: 'remaining', days: daysUntil };
 }
 
-export function sortDeadlinesByDate(deadlines: Deadline[]): Deadline[] {
+export function sortDeadlinesByDate(deadlines: readonly Deadline[]): Deadline[] {
   return [...deadlines].sort((a, b) => {
     return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
@@ -52,7 +52,7 @@ export function getNextDate(dateStr: string, repeat: Deadline['repeat']): string
   return date.toISOString().slice(0, 10);
 }
 
-export function getBadgeState(deadlines: Deadline[], today = new Date()): BadgeState {
+export function getBadgeState(deadlines: readonly Deadline[], today = new Date()): BadgeState {
   if (deadlines.length === 0) {
     return { text: '' };
   }
