@@ -8,6 +8,7 @@
   "deadlineListLabel": { "message": "Deadline list" },
   "premiumInfoLabel": { "message": "Premium information" },
   "namePlaceholder": { "message": "Name" },
+  "onboardingGuide": { "message": "Add a name and date first, then the remaining days will appear here." },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
   "deleteDeadlineButtonLabel": {
@@ -39,6 +40,8 @@
   "limitReached": { "message": "Free limit reached (max 5). Upgrade for unlimited!" },
   "loadingState": { "message": "Loading..." },
   "emptyState": { "message": "No deadlines yet" },
+  "emptyStateTitle": { "message": "No deadlines yet" },
+  "emptyStateBody": { "message": "Enter a name and date above to add your first deadline." },
   "nextOccurrenceButtonTitle": { "message": "Move to the next occurrence" },
   "nextOccurrenceButtonLabel": {
   "message": "Move $NAME$ to the next occurrence",
