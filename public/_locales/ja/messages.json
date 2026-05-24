@@ -5,10 +5,10 @@
   "nameLabel": { "message": "締切名" },
   "dateLabel": { "message": "締切日" },
   "repeatLabel": { "message": "繰り返し" },
-  "deadlineListLabel": { "message": "締切一覧" },
-  "premiumInfoLabel": { "message": "Premiumの状態" },
+  "deadlineListLabel": { "message": "登録した締切" },
+  "premiumInfoLabel": { "message": "Premiumのステータス" },
   "namePlaceholder": { "message": "例: レポート提出" },
-  "onboardingGuide": { "message": "締切名と締切日を入力して「追加」を押すと、一覧とバッジに残り日数が表示されます。" },
+  "onboardingGuide": { "message": "締切名と締切日を入力して「追加」を押すと、一覧とツールバーのバッジに残り日数が表示されます。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
@@ -18,26 +18,26 @@
   }
   },
   "statusOverdueOne": {
-  "message": "$DAYS$日超過",
+  "message": "締切から$DAYS$日経過",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusOverdue": {
-  "message": "$DAYS$日超過",
+  "message": "締切から$DAYS$日経過",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "statusToday": { "message": "今日が締切です" },
+  "statusToday": { "message": "締切は今日です" },
   "statusRemainingOne": {
-  "message": "締切まで残り$DAYS$日",
+  "message": "締切まであと$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusRemaining": {
-  "message": "締切まで残り$DAYS$日",
+  "message": "締切まであと$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
@@ -49,19 +49,19 @@
   "upgradeButton": { "message": "Premiumにアップグレード" },
   "premiumActive": { "message": "Premiumが有効です" },
   "trialDaysLeftOne": {
-  "message": "トライアルは残り$DAYS$日です",
+  "message": "トライアルはあと$DAYS$日です",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "trialDaysLeft": {
-  "message": "トライアルは残り$DAYS$日です",
+  "message": "トライアルはあと$DAYS$日です",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "limitReached": {
-  "message": "無料版で登録できる締切は最大$LIMIT$件です。Premiumでは締切数の上限がなくなり、繰り返しも使えます。",
+  "message": "無料版で登録できる締切は最大$LIMIT$件です。Premiumにすると締切数の上限がなくなり、繰り返しも使えます。",
   "placeholders": {
     "limit": { "content": "$1" }
   }

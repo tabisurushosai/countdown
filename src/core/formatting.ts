@@ -74,5 +74,5 @@ export function formatDisplayDate(dateStr: string, locale: DisplayLocale): strin
   const dateText = DATE_FORMATTERS[locale].format(date);
   const weekdayText = WEEKDAY_FORMATTERS[locale].format(date);
 
-  return locale === 'ja' ? `${dateText}（${weekdayText}）` : `${weekdayText}, ${dateText}`;
+  return locale === 'ja' ? `${dateText}（${weekdayText}）` : `${dateText} (${weekdayText})`;
 }
