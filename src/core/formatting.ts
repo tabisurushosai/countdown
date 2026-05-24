@@ -5,32 +5,27 @@ const LOCALE_TAGS: Record<DisplayLocale, string> = {
   en: 'en-US',
 };
 
+const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  weekday: 'short',
+  timeZone: 'UTC',
+};
+
+const NUMBER_FORMAT_OPTIONS: Intl.NumberFormatOptions = {
+  useGrouping: true,
+  maximumFractionDigits: 0,
+};
+
 const DATE_FORMATTERS: Record<DisplayLocale, Intl.DateTimeFormat> = {
-  ja: new Intl.DateTimeFormat(LOCALE_TAGS.ja, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'short',
-    timeZone: 'UTC',
-  }),
-  en: new Intl.DateTimeFormat(LOCALE_TAGS.en, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'short',
-    timeZone: 'UTC',
-  }),
+  ja: new Intl.DateTimeFormat(LOCALE_TAGS.ja, DATE_FORMAT_OPTIONS),
+  en: new Intl.DateTimeFormat(LOCALE_TAGS.en, DATE_FORMAT_OPTIONS),
 };
 
 const NUMBER_FORMATTERS: Record<DisplayLocale, Intl.NumberFormat> = {
-  ja: new Intl.NumberFormat(LOCALE_TAGS.ja, {
-    useGrouping: true,
-    maximumFractionDigits: 0,
-  }),
-  en: new Intl.NumberFormat(LOCALE_TAGS.en, {
-    useGrouping: true,
-    maximumFractionDigits: 0,
-  }),
+  ja: new Intl.NumberFormat(LOCALE_TAGS.ja, NUMBER_FORMAT_OPTIONS),
+  en: new Intl.NumberFormat(LOCALE_TAGS.en, NUMBER_FORMAT_OPTIONS),
 };
 
 function parseDisplayDateParts(dateStr: string): { year: number; month: number; day: number } | undefined {
