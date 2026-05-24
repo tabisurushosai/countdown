@@ -8,7 +8,7 @@
   "deadlineListLabel": { "message": "Saved deadlines" },
   "premiumInfoLabel": { "message": "Premium status" },
   "namePlaceholder": { "message": "e.g. Submit report" },
-  "onboardingGuide": { "message": "Enter a deadline name and due date, then select Add to show the countdown in the list and toolbar badge." },
+  "onboardingGuide": { "message": "Start by adding one deadline name and due date in the input fields. After adding it, the list and badge will show the days left." },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
   "deleteDeadlineButtonLabel": {
@@ -67,11 +67,11 @@
   }
   },
   "loadingState": { "message": "Loading..." },
-  "emptyState": { "message": "Add your first deadline" },
-  "emptyStateTitle": { "message": "Add your first deadline" },
-  "emptyStateBody": { "message": "After you add a deadline, the list and toolbar badge will show the days left." },
-  "emptyStateHint": { "message": "Use the fields above to get started." },
-  "emptyStateAction": { "message": "Enter deadline name" },
+  "emptyState": { "message": "No deadlines yet" },
+  "emptyStateTitle": { "message": "No deadlines yet" },
+  "emptyStateBody": { "message": "Add your first deadline to see it here, sorted by the nearest due date." },
+  "emptyStateHint": { "message": "If you are not sure where to start, use Deadline name and Due date above." },
+  "emptyStateAction": { "message": "Go to input fields" },
   "nextOccurrenceButtonTitle": { "message": "Move to the next due date" },
   "nextOccurrenceButtonLabel": {
   "message": "Move $NAME$ to the next due date",

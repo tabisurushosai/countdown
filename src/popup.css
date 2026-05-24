@@ -103,6 +103,13 @@ h1 {
   box-shadow: var(--shadow-card);
 }
 
+.deadline-form.is-first-run {
+  border-color: #c7d7fe;
+  box-shadow:
+    0 0 0 3px rgb(29 78 216 / 10%),
+    var(--shadow-card);
+}
+
 input,
 select {
   width: 100%;

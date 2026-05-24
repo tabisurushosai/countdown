@@ -78,6 +78,7 @@ function setHidden(element: HTMLElement, hidden: boolean): void {
 
 function setOnboardingVisible(visible: boolean): void {
   setHidden(onboardingGuide, !visible);
+  inputForm.classList.toggle('is-first-run', visible);
   if (visible) {
     inputForm.setAttribute('aria-describedby', 'onboarding-guide');
   } else {
@@ -94,6 +95,18 @@ function setRepeatSelectHidden(hidden: boolean): void {
 
 function focusDeadlineList(): void {
   listContainer.focus({ preventScroll: true });
+}
+
+function focusFirstIncompleteDeadlineControl(): void {
+  if (!nameInput.value.trim()) {
+    nameInput.focus();
+    return;
+  }
+  if (!dateInput.value) {
+    dateInput.focus();
+    return;
+  }
+  addBtn.focus();
 }
 
 function createStateMessage(message: string, className?: string): HTMLDivElement {
@@ -128,9 +141,10 @@ function createEmptyStateMessage(): HTMLDivElement {
   action.className = 'secondary-button empty-state-action';
   action.type = 'button';
   action.textContent = chrome.i18n.getMessage('emptyStateAction');
-  action.setAttribute('aria-controls', nameInput.id);
+  action.setAttribute('aria-controls', `${nameInput.id} ${dateInput.id} ${addBtn.id}`);
   action.addEventListener('click', () => {
-    nameInput.focus();
+    inputForm.scrollIntoView({ block: 'nearest' });
+    focusFirstIncompleteDeadlineControl();
   });
   state.appendChild(action);
 

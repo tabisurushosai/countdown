@@ -8,7 +8,7 @@
   "deadlineListLabel": { "message": "登録した締切" },
   "premiumInfoLabel": { "message": "Premiumのステータス" },
   "namePlaceholder": { "message": "例: レポート提出" },
-  "onboardingGuide": { "message": "締切名と締切日を入力して「追加」を押すと、一覧とツールバーのバッジに残り日数が表示されます。" },
+  "onboardingGuide": { "message": "まず入力欄で締切名と締切日を1つ登録しましょう。追加後は一覧とバッジで残り日数を確認できます。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
@@ -67,11 +67,11 @@
   }
   },
   "loadingState": { "message": "読み込み中..." },
-  "emptyState": { "message": "最初の締切を追加しましょう" },
-  "emptyStateTitle": { "message": "最初の締切を追加しましょう" },
-  "emptyStateBody": { "message": "追加すると、一覧とツールバーのバッジに残り日数が表示されます。" },
-  "emptyStateHint": { "message": "入力欄はこの画面の上部にあります。" },
-  "emptyStateAction": { "message": "締切名を入力する" },
+  "emptyState": { "message": "まだ締切はありません" },
+  "emptyStateTitle": { "message": "まだ締切はありません" },
+  "emptyStateBody": { "message": "最初の締切を追加すると、ここに日付が近い順で表示されます。" },
+  "emptyStateHint": { "message": "迷ったら、上の「締切名」と「締切日」から始めてください。" },
+  "emptyStateAction": { "message": "入力欄へ移動" },
   "nextOccurrenceButtonTitle": { "message": "次回の締切日に進める" },
   "nextOccurrenceButtonLabel": {
   "message": "「$NAME$」を次回の締切日に進める",
