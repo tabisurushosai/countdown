@@ -214,9 +214,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
   delBtn.onclick = async () => {
     const current = await chromeDeadlineStorage.getDeadlines();
     const filtered = current.filter((item) => item.id !== deadline.id);
-    await chromeDeadlineStorage.setDeadlines(filtered);
-    renderDeadlines(filtered);
-    focusDeadlineList();
+    await saveAndRenderDeadlines(filtered, { focusList: true });
   };
   actions.appendChild(delBtn);
 
@@ -235,9 +233,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
         }
         return item;
       });
-      await chromeDeadlineStorage.setDeadlines(updated);
-      renderDeadlines(updated);
-      focusDeadlineList();
+      await saveAndRenderDeadlines(updated, { focusList: true });
     };
     actions.appendChild(doneBtn);
   }
@@ -264,6 +260,17 @@ function renderDeadlines(deadlines: readonly Deadline[]): void {
   sortedDeadlines.forEach((deadline) => {
     listContainer.appendChild(createDeadlineItem(deadline));
   });
+}
+
+async function saveAndRenderDeadlines(
+  deadlines: Deadline[],
+  options: { focusList?: boolean } = {},
+): Promise<void> {
+  await chromeDeadlineStorage.setDeadlines(deadlines);
+  renderDeadlines(deadlines);
+  if (options.focusList) {
+    focusDeadlineList();
+  }
 }
 
 async function checkPremium(): Promise<void> {
