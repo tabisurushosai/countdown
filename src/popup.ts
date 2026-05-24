@@ -78,6 +78,15 @@ function setHidden(element: HTMLElement, hidden: boolean): void {
   element.classList.toggle('is-hidden', hidden);
 }
 
+function setOnboardingVisible(visible: boolean): void {
+  setHidden(onboardingGuide, !visible);
+  if (visible) {
+    inputForm.setAttribute('aria-describedby', 'onboarding-guide');
+  } else {
+    inputForm.removeAttribute('aria-describedby');
+  }
+}
+
 function setRepeatSelectHidden(hidden: boolean): void {
   setHidden(repeatLabel, hidden);
   setHidden(repeatSelect, hidden);
@@ -111,6 +120,11 @@ function createEmptyStateMessage(): HTMLDivElement {
   body.className = 'state-body';
   body.textContent = chrome.i18n.getMessage('emptyStateBody');
   state.appendChild(body);
+
+  const hint = document.createElement('p');
+  hint.className = 'state-hint';
+  hint.textContent = chrome.i18n.getMessage('emptyStateHint');
+  state.appendChild(hint);
 
   return state;
 }
@@ -228,7 +242,7 @@ function renderDeadlines(deadlines: readonly Deadline[]): void {
 
   updateChromeBadge(sortedDeadlines);
   listContainer.replaceChildren();
-  setHidden(onboardingGuide, sortedDeadlines.length !== 0);
+  setOnboardingVisible(sortedDeadlines.length === 0);
 
   if (sortedDeadlines.length === 0) {
     listContainer.removeAttribute('role');

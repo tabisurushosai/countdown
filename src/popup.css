@@ -51,7 +51,12 @@ select {
 
 .onboarding-guide {
   margin: 6px 0 0;
-  color: #526071;
+  padding: 8px 10px;
+  border-left: 3px solid #1d4ed8;
+  border-radius: 8px;
+  background: #eef4ff;
+  color: #344054;
+  font-size: 0.9rem;
   line-height: 1.45;
 }
 
@@ -241,6 +246,12 @@ button:focus-visible {
 
 .state-body {
   margin: 6px 0 0;
+}
+
+.state-hint {
+  margin: 10px 0 0;
+  color: #344054;
+  font-weight: 600;
 }
 
 .premium-info {
