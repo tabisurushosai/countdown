@@ -24,6 +24,12 @@ the same behavior can be moved to iOS/Android shells later.
   `src/storage`, with platform localization wrappers replacing `chrome.i18n`
   when porting.
 
+The portable boundary is typechecked by `tsconfig.portable.json`, which includes
+only `src/core` and the platform-neutral storage helpers with no Chrome or DOM
+ambient types. Keep new shared logic inside that project so `npm run build`
+continues to catch accidental platform API imports before mobile ports depend on
+the code.
+
 ## Storage contract
 
 Keep the existing storage keys and value shapes unchanged:
@@ -33,9 +39,10 @@ Keep the existing storage keys and value shapes unchanged:
 - `trial_start_ts`: `number`
 
 The Chrome extension uses `chromeLocalStorageAdapter`, which maps this contract
-to `chrome.storage.local`. A mobile app should implement `CountdownStorageAdapter`
-against its local storage mechanism and pass it to the exported storage helpers
-when testing or wiring platform services.
+to `chrome.storage.local`. A mobile app should implement the same
+`CountdownStorageAdapter` local key-value interface against its local storage
+mechanism and pass it to the exported storage helpers when testing or wiring
+platform services.
 
 Adapter implementations should:
 
@@ -50,8 +57,9 @@ Adapter implementations should:
 Recommended mobile wiring shape:
 
 1. Implement a small adapter that satisfies `CountdownStorageAdapter`.
-2. Pass it to `createCountdownStorage(adapter)`.
-3. Use the returned methods from platform services or views instead of reading
+2. Keep the adapter as the only module that imports native storage SDKs.
+3. Pass it to `createCountdownStorage(adapter)`.
+4. Use the returned methods from platform services or views instead of reading
    native storage directly from UI code.
 
 ## UI and platform services
@@ -75,4 +83,6 @@ Keep UI shells thin when moving to mobile:
 3. Bind domain storage helpers with `createCountdownStorage(adapter)`, following
    the `chromeDeadlineStorage` pattern.
 4. Keep platform-only APIs in adapter/UI shell modules, not in `src/core`.
-5. Run the app's equivalent build/typecheck after wiring the adapter.
+5. Run `npm run build` before sharing changes to verify the portable TypeScript
+   boundary and the Chrome extension bundle.
+6. Run the app's equivalent build/typecheck after wiring the adapter.

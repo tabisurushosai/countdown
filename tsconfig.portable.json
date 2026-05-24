@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2020"],
+    "types": []
+  },
+  "include": [
+    "src/core/**/*.ts",
+    "src/storage/storageAdapter.ts",
+    "src/storage/deadlineStorage.ts"
+  ]
+}
