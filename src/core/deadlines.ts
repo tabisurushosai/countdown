@@ -9,7 +9,7 @@ export interface BadgeState {
 }
 
 export type DeadlineStatus =
-  | { kind: 'overdue' }
+  | { kind: 'overdue'; days: number }
   | { kind: 'today' }
   | { kind: 'remaining'; days: number };
 
@@ -27,7 +27,7 @@ export function getDaysUntil(dateStr: string, today = new Date()): number {
 
 export function getDeadlineStatus(daysUntil: number): DeadlineStatus {
   if (daysUntil < 0) {
-    return { kind: 'overdue' };
+    return { kind: 'overdue', days: Math.abs(daysUntil) };
   }
   if (daysUntil === 0) {
     return { kind: 'today' };
