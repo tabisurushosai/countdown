@@ -1,5 +1,5 @@
 import { updateChromeBadge } from './chromeBadge';
-import { getDeadlines } from './storage/deadlineStorage';
+import { getDeadlines } from './storage/chromeDeadlineStorage';
 
 async function refreshBadge(): Promise<void> {
   const deadlines = await getDeadlines();
