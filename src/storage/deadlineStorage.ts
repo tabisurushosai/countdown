@@ -1,4 +1,4 @@
-import type { Deadline } from '../types';
+import type { Deadline } from '../core/types';
 import {
   DEADLINES_KEY,
   IS_PREMIUM_KEY,
@@ -10,6 +10,14 @@ export interface CountdownSnapshot {
   deadlines: Deadline[];
   isPremium: boolean;
   trialStartTs: number | undefined;
+}
+
+export interface CountdownStorage {
+  getDeadlines(): Promise<Deadline[]>;
+  setDeadlines(deadlines: Deadline[]): Promise<void>;
+  getCountdownSnapshot(): Promise<CountdownSnapshot>;
+  ensureTrialStart(nowTs?: number): Promise<number>;
+  setPremium(isPremium: boolean): Promise<void>;
 }
 
 export async function getDeadlines(storage: CountdownStorageAdapter): Promise<Deadline[]> {
@@ -51,4 +59,14 @@ export async function setPremium(
   storage: CountdownStorageAdapter,
 ): Promise<void> {
   await storage.set({ isPremium });
+}
+
+export function createCountdownStorage(storage: CountdownStorageAdapter): CountdownStorage {
+  return {
+    getDeadlines: () => getDeadlines(storage),
+    setDeadlines: (deadlines) => setDeadlines(deadlines, storage),
+    getCountdownSnapshot: () => getCountdownSnapshot(storage),
+    ensureTrialStart: (nowTs) => ensureTrialStart(storage, nowTs),
+    setPremium: (isPremium) => setPremium(isPremium, storage),
+  };
 }

@@ -1,30 +1,28 @@
-import type { Deadline } from '../types';
+import type { Deadline } from '../core/types';
 import { chromeLocalStorageAdapter } from './chromeLocalStorageAdapter';
 import {
-  ensureTrialStart as ensureTrialStartWithStorage,
-  getCountdownSnapshot as getCountdownSnapshotWithStorage,
-  getDeadlines as getDeadlinesWithStorage,
-  setDeadlines as setDeadlinesWithStorage,
-  setPremium as setPremiumWithStorage,
+  createCountdownStorage,
   type CountdownSnapshot,
 } from './deadlineStorage';
 
+const chromeDeadlineStorage = createCountdownStorage(chromeLocalStorageAdapter);
+
 export function getDeadlines(): Promise<Deadline[]> {
-  return getDeadlinesWithStorage(chromeLocalStorageAdapter);
+  return chromeDeadlineStorage.getDeadlines();
 }
 
 export function setDeadlines(deadlines: Deadline[]): Promise<void> {
-  return setDeadlinesWithStorage(deadlines, chromeLocalStorageAdapter);
+  return chromeDeadlineStorage.setDeadlines(deadlines);
 }
 
 export function getCountdownSnapshot(): Promise<CountdownSnapshot> {
-  return getCountdownSnapshotWithStorage(chromeLocalStorageAdapter);
+  return chromeDeadlineStorage.getCountdownSnapshot();
 }
 
 export function ensureTrialStart(nowTs = Date.now()): Promise<number> {
-  return ensureTrialStartWithStorage(chromeLocalStorageAdapter, nowTs);
+  return chromeDeadlineStorage.ensureTrialStart(nowTs);
 }
 
 export function setPremium(isPremium: boolean): Promise<void> {
-  return setPremiumWithStorage(isPremium, chromeLocalStorageAdapter);
+  return chromeDeadlineStorage.setPremium(isPremium);
 }
