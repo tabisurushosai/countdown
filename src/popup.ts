@@ -126,7 +126,8 @@ function createEmptyStateMessage(): HTMLDivElement {
 
 function formatDeadlineStatus(status: DeadlineStatus): string {
   if (status.kind === 'overdue') {
-    return chrome.i18n.getMessage('statusOverdue');
+    const messageKey = status.days === 1 ? 'statusOverdueOne' : 'statusOverdue';
+    return chrome.i18n.getMessage(messageKey, [formatInteger(status.days, displayLocale)]);
   }
   if (status.kind === 'today') {
     return chrome.i18n.getMessage('statusToday');

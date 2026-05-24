@@ -1,11 +1,11 @@
 {
   "extName": { "message": "締切カウントダウン" },
-  "extDesc": { "message": "締切までの残り日数をツールバーのアイコンに表示します。予定忘れを防ぎます。" },
+  "extDesc": { "message": "締切までの残り日数をツールバーのアイコンに表示し、予定忘れを防ぎます。" },
   "title": { "message": "締切カウントダウン" },
   "nameLabel": { "message": "締切名" },
   "dateLabel": { "message": "締切日" },
   "repeatLabel": { "message": "繰り返し" },
-  "deadlineListLabel": { "message": "締切一覧" },
+  "deadlineListLabel": { "message": "登録した締切" },
   "premiumInfoLabel": { "message": "Premiumの状態" },
   "namePlaceholder": { "message": "例: レポート提出" },
   "onboardingGuide": { "message": "締切名と日付を入力し、「追加」を押すと登録できます。" },
@@ -17,7 +17,18 @@
     "name": { "content": "$1" }
   }
   },
-  "statusOverdue": { "message": "期限切れ" },
+  "statusOverdueOne": {
+  "message": "$DAYS$日超過",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
+  "statusOverdue": {
+  "message": "$DAYS$日超過",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
   "statusToday": { "message": "今日が締切" },
   "statusRemainingOne": {
   "message": "残り$DAYS$日",
@@ -36,7 +47,7 @@
   "repeatMonthly": { "message": "毎月" },
   "repeatYearly": { "message": "毎年" },
   "upgradeButton": { "message": "Premiumにアップグレード" },
-  "premiumActive": { "message": "Premiumは有効です" },
+  "premiumActive": { "message": "Premiumが有効です" },
   "trialDaysLeftOne": {
   "message": "トライアルは残り$DAYS$日です",
   "placeholders": {
@@ -50,7 +61,7 @@
   }
   },
   "limitReached": {
-  "message": "無料版で登録できる締切は$LIMIT$件までです。無制限で使うにはPremiumにアップグレードしてください。",
+  "message": "無料版で登録できる締切は最大$LIMIT$件です。無制限で使うにはPremiumにアップグレードしてください。",
   "placeholders": {
     "limit": { "content": "$1" }
   }
@@ -58,7 +69,7 @@
   "loadingState": { "message": "読み込み中..." },
   "emptyState": { "message": "最初の締切を追加しましょう" },
   "emptyStateTitle": { "message": "最初の締切を追加しましょう" },
-  "emptyStateBody": { "message": "追加すると、一覧とアイコンバッジに残り日数が表示されます。" },
+  "emptyStateBody": { "message": "追加すると、一覧とツールバーのバッジに残り日数が表示されます。" },
   "emptyStateHint": { "message": "入力欄はこの画面の上部にあります。" },
   "nextOccurrenceButtonTitle": { "message": "次の予定日に進める" },
   "nextOccurrenceButtonLabel": {

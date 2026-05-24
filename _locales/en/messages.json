@@ -1,11 +1,11 @@
 {
   "extName": { "message": "Deadline Countdown" },
-  "extDesc": { "message": "Displays the days remaining until your deadlines on the toolbar icon." },
+  "extDesc": { "message": "Shows the days left until your deadlines on the toolbar icon." },
   "title": { "message": "Deadline Countdown" },
   "nameLabel": { "message": "Deadline name" },
   "dateLabel": { "message": "Due date" },
   "repeatLabel": { "message": "Repeat" },
-  "deadlineListLabel": { "message": "Deadline list" },
+  "deadlineListLabel": { "message": "Your deadlines" },
   "premiumInfoLabel": { "message": "Premium status" },
   "namePlaceholder": { "message": "e.g. Submit report" },
   "onboardingGuide": { "message": "Enter a deadline name and due date, then choose Add." },
@@ -17,7 +17,18 @@
     "name": { "content": "$1" }
   }
   },
-  "statusOverdue": { "message": "Overdue" },
+  "statusOverdueOne": {
+  "message": "$DAYS$ day overdue",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
+  "statusOverdue": {
+  "message": "$DAYS$ days overdue",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
   "statusToday": { "message": "Due today" },
   "statusRemainingOne": {
   "message": "$DAYS$ day left",
