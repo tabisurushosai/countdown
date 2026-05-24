@@ -9,6 +9,10 @@ const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
+  timeZone: 'UTC',
+};
+
+const WEEKDAY_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   weekday: 'short',
   timeZone: 'UTC',
 };
@@ -21,6 +25,11 @@ const NUMBER_FORMAT_OPTIONS: Intl.NumberFormatOptions = {
 const DATE_FORMATTERS: Record<DisplayLocale, Intl.DateTimeFormat> = {
   ja: new Intl.DateTimeFormat(LOCALE_TAGS.ja, DATE_FORMAT_OPTIONS),
   en: new Intl.DateTimeFormat(LOCALE_TAGS.en, DATE_FORMAT_OPTIONS),
+};
+
+const WEEKDAY_FORMATTERS: Record<DisplayLocale, Intl.DateTimeFormat> = {
+  ja: new Intl.DateTimeFormat(LOCALE_TAGS.ja, WEEKDAY_FORMAT_OPTIONS),
+  en: new Intl.DateTimeFormat(LOCALE_TAGS.en, WEEKDAY_FORMAT_OPTIONS),
 };
 
 const NUMBER_FORMATTERS: Record<DisplayLocale, Intl.NumberFormat> = {
@@ -61,5 +70,9 @@ export function formatDisplayDate(dateStr: string, locale: DisplayLocale): strin
   }
 
   const { year, month, day } = dateParts;
-  return DATE_FORMATTERS[locale].format(new Date(Date.UTC(year, month - 1, day)));
+  const date = new Date(Date.UTC(year, month - 1, day));
+  const dateText = DATE_FORMATTERS[locale].format(date);
+  const weekdayText = WEEKDAY_FORMATTERS[locale].format(date);
+
+  return locale === 'ja' ? `${dateText}（${weekdayText}）` : `${weekdayText}, ${dateText}`;
 }
