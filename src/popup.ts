@@ -66,7 +66,10 @@ function initI18n(): void {
   setTextById('repeat-yearly', chrome.i18n.getMessage('repeatYearly'));
   upgradeBtn.textContent = chrome.i18n.getMessage('upgradeButton');
   listContainer.removeAttribute('role');
-  listContainer.replaceChildren(createStateMessage(chrome.i18n.getMessage('loadingState')));
+  listContainer.setAttribute('aria-busy', 'true');
+  listContainer.replaceChildren(
+    createStateMessage(chrome.i18n.getMessage('loadingState'), 'loading-state'),
+  );
 }
 
 function setHidden(element: HTMLElement, hidden: boolean): void {
@@ -93,9 +96,9 @@ function focusDeadlineList(): void {
   listContainer.focus({ preventScroll: true });
 }
 
-function createStateMessage(message: string): HTMLDivElement {
+function createStateMessage(message: string, className?: string): HTMLDivElement {
   const state = document.createElement('div');
-  state.className = 'state-message';
+  state.className = ['state-message', className].filter(Boolean).join(' ');
   state.setAttribute('role', 'status');
   state.textContent = message;
   return state;
@@ -209,7 +212,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
 
   if (deadline.repeat && deadline.repeat !== 'none') {
     const doneBtn = document.createElement('button');
-    doneBtn.className = 'icon-button';
+    doneBtn.className = 'icon-button complete-button';
     doneBtn.type = 'button';
     doneBtn.textContent = '✓';
     doneBtn.title = chrome.i18n.getMessage('nextOccurrenceButtonTitle');
@@ -238,6 +241,7 @@ function renderDeadlines(deadlines: readonly Deadline[]): void {
 
   updateChromeBadge(sortedDeadlines);
   listContainer.replaceChildren();
+  listContainer.removeAttribute('aria-busy');
   setOnboardingVisible(sortedDeadlines.length === 0);
 
   if (sortedDeadlines.length === 0) {
