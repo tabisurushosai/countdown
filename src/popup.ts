@@ -8,6 +8,7 @@ import {
   getSavedRepeat,
   sortDeadlinesByDate,
 } from './core/deadlines';
+import { formatDisplayDate, formatInteger, type DisplayLocale } from './core/formatting';
 import { updateChromeBadge } from './chromeBadge';
 import {
   ensureTrialStart,
@@ -47,9 +48,11 @@ const listContainer = getRequiredElement('deadline-list', HTMLElement);
 const trialStatus = getRequiredElement('trial-status', HTMLSpanElement);
 const upgradeBtn = getRequiredElement('upgrade-btn', HTMLButtonElement);
 const onboardingGuide = getRequiredElement('onboarding-guide', HTMLElement);
+let displayLocale: DisplayLocale = 'en';
 
 function initI18n(): void {
-  document.documentElement.lang = chrome.i18n.getUILanguage().startsWith('ja') ? 'ja' : 'en';
+  displayLocale = chrome.i18n.getUILanguage().startsWith('ja') ? 'ja' : 'en';
+  document.documentElement.lang = displayLocale;
 
   const titleEl = document.getElementById('title');
   if (titleEl) titleEl.textContent = chrome.i18n.getMessage('title');
@@ -119,7 +122,9 @@ function formatDeadlineStatus(status: DeadlineStatus): string {
   if (status.kind === 'today') {
     return chrome.i18n.getMessage('statusToday');
   }
-  return chrome.i18n.getMessage('statusRemaining', [status.days.toString()]);
+
+  const messageKey = status.days === 1 ? 'statusRemainingOne' : 'statusRemaining';
+  return chrome.i18n.getMessage(messageKey, [formatInteger(status.days, displayLocale)]);
 }
 
 function getRepeatLabel(deadline: Deadline): string {
@@ -156,7 +161,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
 
   const date = document.createElement('time');
   date.dateTime = deadline.date;
-  date.textContent = deadline.date;
+  date.textContent = formatDisplayDate(deadline.date, displayLocale);
   meta.appendChild(date);
 
   const statusBadge = document.createElement('span');
@@ -247,7 +252,10 @@ async function checkPremium(): Promise<void> {
     setRepeatSelectHidden(false);
   } else {
     const remainingTrial = getRemainingTrialDays(trialStart);
-    trialStatus.textContent = chrome.i18n.getMessage('trialDaysLeft', [remainingTrial.toString()]);
+    const messageKey = remainingTrial === 1 ? 'trialDaysLeftOne' : 'trialDaysLeft';
+    trialStatus.textContent = chrome.i18n.getMessage(messageKey, [
+      formatInteger(remainingTrial, displayLocale),
+    ]);
     setHidden(upgradeBtn, false);
     setRepeatSelectHidden(true);
   }

@@ -8,7 +8,7 @@
   "deadlineListLabel": { "message": "締切一覧" },
   "premiumInfoLabel": { "message": "Premium情報" },
   "namePlaceholder": { "message": "名前" },
-  "onboardingGuide": { "message": "まず締切名と日付を入れて「追加」を押すと、残り日数が表示されます。" },
+  "onboardingGuide": { "message": "締切名と日付を入力し、「追加」を押すと残り日数が表示されます。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
@@ -19,25 +19,37 @@
   },
   "statusOverdue": { "message": "超過" },
   "statusToday": { "message": "今日" },
+  "statusRemainingOne": {
+  "message": "残り $DAYS$ 日",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
   "statusRemaining": {
   "message": "残り $DAYS$ 日",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "repeatNone": { "message": "繰り返しなし" },
+  "repeatNone": { "message": "繰り返さない" },
   "repeatWeekly": { "message": "毎週" },
   "repeatMonthly": { "message": "毎月" },
   "repeatYearly": { "message": "毎年" },
-  "upgradeButton": { "message": "Premiumにアップグレード" },
-  "premiumActive": { "message": "Premium有効" },
-  "trialDaysLeft": {
-  "message": "トライアル残り $DAYS$ 日",
+  "upgradeButton": { "message": "Premium にアップグレード" },
+  "premiumActive": { "message": "Premium が有効です" },
+  "trialDaysLeftOne": {
+  "message": "トライアルは残り $DAYS$ 日です",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "limitReached": { "message": "無料版の制限(5件)に達しました。無制限にするにはPremiumへ！" },
+  "trialDaysLeft": {
+  "message": "トライアルは残り $DAYS$ 日です",
+  "placeholders": {
+    "days": { "content": "$1" }
+  }
+  },
+  "limitReached": { "message": "無料版の上限（5件）に達しました。無制限で使うには Premium にアップグレードしてください。" },
   "loadingState": { "message": "読み込み中..." },
   "emptyState": { "message": "締切はまだありません" },
   "emptyStateTitle": { "message": "締切はまだありません" },
