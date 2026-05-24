@@ -49,6 +49,12 @@ select {
   padding-bottom: 2px;
 }
 
+.onboarding-guide {
+  margin: 6px 0 0;
+  color: #526071;
+  line-height: 1.45;
+}
+
 h1 {
   margin: 0;
   color: #101828;
@@ -218,6 +224,15 @@ button:focus-visible {
   color: #526071;
   line-height: 1.5;
   text-align: center;
+}
+
+.state-title {
+  color: #101828;
+  font-weight: 700;
+}
+
+.state-body {
+  margin: 6px 0 0;
 }
 
 .premium-info {

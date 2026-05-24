@@ -45,6 +45,7 @@ const inputForm = getRequiredElement('input-form', HTMLFormElement);
 const listContainer = getRequiredElement('deadline-list', HTMLElement);
 const trialStatus = getRequiredElement('trial-status', HTMLSpanElement);
 const upgradeBtn = getRequiredElement('upgrade-btn', HTMLButtonElement);
+const onboardingGuide = getRequiredElement('onboarding-guide', HTMLElement);
 
 function initI18n() {
   document.documentElement.lang = chrome.i18n.getUILanguage().startsWith('ja') ? 'ja' : 'en';
@@ -57,6 +58,7 @@ function initI18n() {
   setTextById('deadline-list-title', chrome.i18n.getMessage('deadlineListLabel'));
   setTextById('premium-info-title', chrome.i18n.getMessage('premiumInfoLabel'));
   nameInput.placeholder = chrome.i18n.getMessage('namePlaceholder');
+  onboardingGuide.textContent = chrome.i18n.getMessage('onboardingGuide');
   addBtn.textContent = chrome.i18n.getMessage('addButton');
 
   setTextById('repeat-none', chrome.i18n.getMessage('repeatNone'));
@@ -77,6 +79,24 @@ function createStateMessage(message: string): HTMLDivElement {
   state.className = 'state-message';
   state.setAttribute('role', 'status');
   state.textContent = message;
+  return state;
+}
+
+function createEmptyStateMessage(): HTMLDivElement {
+  const state = document.createElement('div');
+  state.className = 'state-message empty-state';
+  state.setAttribute('role', 'status');
+
+  const title = document.createElement('div');
+  title.className = 'state-title';
+  title.textContent = chrome.i18n.getMessage('emptyStateTitle');
+  state.appendChild(title);
+
+  const body = document.createElement('p');
+  body.className = 'state-body';
+  body.textContent = chrome.i18n.getMessage('emptyStateBody');
+  state.appendChild(body);
+
   return state;
 }
 
@@ -184,10 +204,11 @@ function renderDeadlines(deadlines: Deadline[]) {
 
   updateChromeBadge(sortedDeadlines);
   listContainer.replaceChildren();
+  setHidden(onboardingGuide, sortedDeadlines.length !== 0);
 
   if (sortedDeadlines.length === 0) {
     listContainer.removeAttribute('role');
-    listContainer.appendChild(createStateMessage(chrome.i18n.getMessage('emptyState')));
+    listContainer.appendChild(createEmptyStateMessage());
     return;
   }
 
