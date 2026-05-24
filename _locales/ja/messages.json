@@ -8,7 +8,7 @@
   "deadlineListLabel": { "message": "締切一覧" },
   "premiumInfoLabel": { "message": "Premium情報" },
   "namePlaceholder": { "message": "名前" },
-  "onboardingGuide": { "message": "締切名と日付を入力し、「追加」を押すと残り日数が表示されます。" },
+  "onboardingGuide": { "message": "はじめての締切は、名前と日付を入れて「追加」を押すだけです。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
@@ -51,9 +51,10 @@
   },
   "limitReached": { "message": "無料版の上限（5件）に達しました。無制限で使うには Premium にアップグレードしてください。" },
   "loadingState": { "message": "読み込み中..." },
-  "emptyState": { "message": "締切はまだありません" },
-  "emptyStateTitle": { "message": "締切はまだありません" },
-  "emptyStateBody": { "message": "上の入力欄に名前と日付を入れて、最初の締切を追加しましょう。" },
+  "emptyState": { "message": "最初の締切を追加しましょう" },
+  "emptyStateTitle": { "message": "最初の締切を追加しましょう" },
+  "emptyStateBody": { "message": "追加すると、一覧とアイコンバッジに残り日数が表示されます。" },
+  "emptyStateHint": { "message": "入力欄はこの画面の上部にあります。" },
   "nextOccurrenceButtonTitle": { "message": "次の予定日に進める" },
   "nextOccurrenceButtonLabel": {
   "message": "$NAME$ を次の予定日に進める",
