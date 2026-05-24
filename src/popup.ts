@@ -47,7 +47,7 @@ const trialStatus = getRequiredElement('trial-status', HTMLSpanElement);
 const upgradeBtn = getRequiredElement('upgrade-btn', HTMLButtonElement);
 const onboardingGuide = getRequiredElement('onboarding-guide', HTMLElement);
 
-function initI18n() {
+function initI18n(): void {
   document.documentElement.lang = chrome.i18n.getUILanguage().startsWith('ja') ? 'ja' : 'en';
 
   const titleEl = document.getElementById('title');
@@ -70,7 +70,7 @@ function initI18n() {
   listContainer.replaceChildren(createStateMessage(chrome.i18n.getMessage('loadingState')));
 }
 
-function setHidden(element: HTMLElement, hidden: boolean) {
+function setHidden(element: HTMLElement, hidden: boolean): void {
   element.classList.toggle('is-hidden', hidden);
 }
 
@@ -199,7 +199,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
   return item;
 }
 
-function renderDeadlines(deadlines: Deadline[]) {
+function renderDeadlines(deadlines: readonly Deadline[]): void {
   const sortedDeadlines = sortDeadlinesByDate(deadlines);
 
   updateChromeBadge(sortedDeadlines);
@@ -218,9 +218,9 @@ function renderDeadlines(deadlines: Deadline[]) {
   });
 }
 
-async function checkPremium() {
+async function checkPremium(): Promise<void> {
   const snapshot = await getCountdownSnapshot();
-  const trialStart = snapshot.trialStartTs || await ensureTrialStart();
+  const trialStart = snapshot.trialStartTs || (await ensureTrialStart());
 
   if (snapshot.isPremium) {
     trialStatus.textContent = chrome.i18n.getMessage('premiumActive');

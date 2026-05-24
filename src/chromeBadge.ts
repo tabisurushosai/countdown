@@ -1,7 +1,7 @@
 import { getBadgeState } from './core/deadlines';
 import type { Deadline } from './types';
 
-export function updateChromeBadge(deadlines: Deadline[]): void {
+export function updateChromeBadge(deadlines: readonly Deadline[]): void {
   const badgeState = getBadgeState(deadlines);
   chrome.action.setBadgeText({ text: badgeState.text });
 
