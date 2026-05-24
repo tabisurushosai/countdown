@@ -354,6 +354,11 @@ button:focus-visible {
   font-weight: 600;
 }
 
+.empty-state-action {
+  justify-self: start;
+  margin-top: 12px;
+}
+
 .premium-info {
   display: flex;
   gap: 8px;

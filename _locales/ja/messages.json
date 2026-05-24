@@ -71,6 +71,7 @@
   "emptyStateTitle": { "message": "最初の締切を追加しましょう" },
   "emptyStateBody": { "message": "追加すると、一覧とツールバーのバッジに残り日数が表示されます。" },
   "emptyStateHint": { "message": "入力欄はこの画面の上部にあります。" },
+  "emptyStateAction": { "message": "締切名を入力する" },
   "nextOccurrenceButtonTitle": { "message": "次回の締切日に進める" },
   "nextOccurrenceButtonLabel": {
   "message": "「$NAME$」を次回の締切日に進める",

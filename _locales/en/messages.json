@@ -71,6 +71,7 @@
   "emptyStateTitle": { "message": "Add your first deadline" },
   "emptyStateBody": { "message": "After you add it, the list and toolbar badge will show the days left." },
   "emptyStateHint": { "message": "Use the fields above to get started." },
+  "emptyStateAction": { "message": "Enter deadline name" },
   "nextOccurrenceButtonTitle": { "message": "Move to next occurrence" },
   "nextOccurrenceButtonLabel": {
   "message": "Move deadline to next occurrence: $NAME$",
