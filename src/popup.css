@@ -77,7 +77,7 @@ h1 {
 input,
 select {
   width: 100%;
-  min-height: 44px;
+  min-height: 48px;
   padding: 10px 12px;
   border: 1px solid #c8d1df;
   border-radius: 8px;
@@ -89,11 +89,19 @@ input::placeholder {
   color: #667085;
 }
 
-input:focus,
-select:focus,
+input:focus-visible,
+select:focus-visible,
 button:focus-visible {
-  outline: 3px solid #1d4ed8;
+  outline: 3px solid #1e40af;
   outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgb(30 64 175 / 18%);
+}
+
+.deadline-items:focus-visible {
+  outline: 3px solid #1e40af;
+  outline-offset: 4px;
+  border-radius: 12px;
+  box-shadow: 0 0 0 6px rgb(30 64 175 / 18%);
 }
 
 .primary-button,
@@ -106,30 +114,30 @@ button:focus-visible {
 }
 
 .primary-button {
-  min-height: 44px;
+  min-height: 48px;
   padding: 10px 14px;
   background: #1d4ed8;
   color: #ffffff;
 }
 
 .secondary-button {
-  min-height: 44px;
+  min-height: 48px;
   padding: 10px 12px;
   background: #e8eefb;
-  color: #1d4ed8;
+  color: #1e40af;
 }
 
 .icon-button {
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 48px;
+  min-height: 48px;
   padding: 10px 12px;
   background: #f1f4f9;
-  color: #344054;
+  color: #24364f;
 }
 
 .danger-button {
   background: #fff1f1;
-  color: #b42318;
+  color: #991b1b;
 }
 
 .deadline-list {
@@ -191,17 +199,17 @@ button:focus-visible {
 
 .status-remaining {
   background: #eaf2ff;
-  color: #1d4ed8;
+  color: #1e40af;
 }
 
 .status-today {
   background: #fff7d6;
-  color: #854d0e;
+  color: #713f12;
 }
 
 .status-overdue {
   background: #fee4e2;
-  color: #b42318;
+  color: #991b1b;
 }
 
 .repeat-badge {
@@ -213,7 +221,7 @@ button:focus-visible {
 .deadline-actions {
   display: flex;
   flex-shrink: 0;
-  gap: 6px;
+  gap: 8px;
 }
 
 .state-message {

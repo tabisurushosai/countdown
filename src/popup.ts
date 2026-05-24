@@ -40,6 +40,7 @@ function setTextById(id: string, text: string): void {
 const nameInput = getRequiredElement('deadline-name', HTMLInputElement);
 const dateInput = getRequiredElement('deadline-date', HTMLInputElement);
 const repeatSelect = getRequiredElement('deadline-repeat', HTMLSelectElement);
+const repeatLabel = getRequiredElement('deadline-repeat-label', HTMLLabelElement);
 const addBtn = getRequiredElement('add-btn', HTMLButtonElement);
 const inputForm = getRequiredElement('input-form', HTMLFormElement);
 const listContainer = getRequiredElement('deadline-list', HTMLElement);
@@ -72,6 +73,17 @@ function initI18n(): void {
 
 function setHidden(element: HTMLElement, hidden: boolean): void {
   element.classList.toggle('is-hidden', hidden);
+}
+
+function setRepeatSelectHidden(hidden: boolean): void {
+  setHidden(repeatLabel, hidden);
+  setHidden(repeatSelect, hidden);
+  repeatSelect.disabled = hidden;
+  repeatSelect.setAttribute('aria-hidden', hidden.toString());
+}
+
+function focusDeadlineList(): void {
+  listContainer.focus({ preventScroll: true });
 }
 
 function createStateMessage(message: string): HTMLDivElement {
@@ -121,20 +133,25 @@ function getRepeatLabel(deadline: Deadline): string {
 
 function createDeadlineItem(deadline: Deadline): HTMLDivElement {
   const status = getDeadlineStatus(getDaysUntil(deadline.date));
+  const itemId = `deadline-${deadline.id}`;
 
   const item = document.createElement('div');
   item.className = 'deadline-item';
   item.setAttribute('role', 'listitem');
+  item.setAttribute('aria-labelledby', `${itemId}-name`);
+  item.setAttribute('aria-describedby', `${itemId}-meta`);
 
   const main = document.createElement('div');
   main.className = 'deadline-main';
 
   const name = document.createElement('div');
+  name.id = `${itemId}-name`;
   name.className = 'deadline-name';
   name.textContent = deadline.name;
   main.appendChild(name);
 
   const meta = document.createElement('div');
+  meta.id = `${itemId}-meta`;
   meta.className = 'deadline-meta';
 
   const date = document.createElement('time');
@@ -171,6 +188,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
     const filtered = current.filter((item) => item.id !== deadline.id);
     await setDeadlines(filtered);
     renderDeadlines(filtered);
+    focusDeadlineList();
   };
   actions.appendChild(delBtn);
 
@@ -191,6 +209,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
       });
       await setDeadlines(updated);
       renderDeadlines(updated);
+      focusDeadlineList();
     };
     actions.appendChild(doneBtn);
   }
@@ -225,12 +244,12 @@ async function checkPremium(): Promise<void> {
   if (snapshot.isPremium) {
     trialStatus.textContent = chrome.i18n.getMessage('premiumActive');
     setHidden(upgradeBtn, true);
-    setHidden(repeatSelect, false);
+    setRepeatSelectHidden(false);
   } else {
     const remainingTrial = getRemainingTrialDays(trialStart);
     trialStatus.textContent = chrome.i18n.getMessage('trialDaysLeft', [remainingTrial.toString()]);
     setHidden(upgradeBtn, false);
-    setHidden(repeatSelect, true);
+    setRepeatSelectHidden(true);
   }
   renderDeadlines(snapshot.deadlines);
 }
