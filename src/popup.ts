@@ -156,7 +156,7 @@ function createDeadlineItem(deadline: Deadline): HTMLDivElement {
   const itemId = `deadline-${deadline.id}`;
 
   const item = document.createElement('div');
-  item.className = 'deadline-item';
+  item.className = `deadline-item deadline-item-${status.kind}`;
   item.setAttribute('role', 'listitem');
   item.setAttribute('aria-labelledby', `${itemId}-name`);
   item.setAttribute('aria-describedby', `${itemId}-meta`);

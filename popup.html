@@ -12,11 +12,11 @@
         </header>
 
         <form id="input-form" class="deadline-form">
-            <label id="deadline-name-label" for="deadline-name" class="sr-only">名前</label>
+            <label id="deadline-name-label" for="deadline-name" class="field-label">名前</label>
             <input type="text" id="deadline-name" placeholder="名前" autocomplete="off" aria-required="true">
-            <label id="deadline-date-label" for="deadline-date" class="sr-only">日付</label>
+            <label id="deadline-date-label" for="deadline-date" class="field-label">日付</label>
             <input type="date" id="deadline-date" aria-required="true">
-            <label id="deadline-repeat-label" for="deadline-repeat" class="sr-only">繰り返し</label>
+            <label id="deadline-repeat-label" for="deadline-repeat" class="field-label is-hidden">繰り返し</label>
             <select id="deadline-repeat" class="is-hidden">
                 <option value="none" id="repeat-none">繰り返しなし</option>
                 <option value="weekly" id="repeat-weekly">毎週</option>
@@ -27,7 +27,7 @@
         </form>
 
         <section class="deadline-list" aria-labelledby="deadline-list-title">
-            <h2 id="deadline-list-title" class="sr-only">締切一覧</h2>
+            <h2 id="deadline-list-title" class="section-title">締切一覧</h2>
             <div id="deadline-list" class="deadline-items" aria-live="polite" aria-atomic="false" tabindex="-1">
                 <div class="state-message" role="status">読み込み中...</div>
             </div>
