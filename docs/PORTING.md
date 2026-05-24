@@ -10,9 +10,10 @@ the same behavior can be moved to iOS/Android shells later.
 - Domain types such as `Deadline` and `DeadlineRepeat` live in
   `src/core/types.ts` so shared logic can be reused without depending on the
   Chrome extension shell.
-- `src/storage` owns persistence through `CountdownStorageAdapter`. Platform
-  code should provide an adapter with `get(keys)` and `set(values)` instead of
-  changing core logic.
+- `src/storage` owns persistence through the generic `KeyValueStorageAdapter`
+  boundary and the countdown-specific `CountdownStorageAdapter` schema.
+  Platform code should provide an adapter with `get(keys)` and `set(values)`
+  instead of changing core logic.
 - `src/storage/deadlineStorage.ts` is platform-neutral and accepts an adapter
   explicitly. Use `createCountdownStorage(adapter)` to bind the shared
   countdown storage helpers to the platform adapter. Chrome wiring belongs in
@@ -40,9 +41,14 @@ Keep the existing storage keys and value shapes unchanged:
 
 The Chrome extension uses `chromeLocalStorageAdapter`, which maps this contract
 to `chrome.storage.local`. A mobile app should implement the same
-`CountdownStorageAdapter` local key-value interface against its local storage
+`CountdownStorageAdapter` key-value interface against its local storage
 mechanism and pass it to the exported storage helpers when testing or wiring
 platform services.
+
+Use the shared constants in `src/storage/storageAdapter.ts` for storage keys
+instead of spelling them in platform code. That keeps Chrome, iOS, Android, and
+tests aligned with the same persisted data shape while allowing each platform to
+own only the adapter implementation.
 
 Adapter implementations should:
 
@@ -56,7 +62,9 @@ Adapter implementations should:
 
 Recommended mobile wiring shape:
 
-1. Implement a small adapter that satisfies `CountdownStorageAdapter`.
+1. Implement a small adapter that satisfies `CountdownStorageAdapter`
+   (`get(keys)` returns a partial object for requested keys, and `set(values)`
+   writes only the provided keys).
 2. Keep the adapter as the only module that imports native storage SDKs.
 3. Pass it to `createCountdownStorage(adapter)`.
 4. Use the returned methods from platform services or views instead of reading
