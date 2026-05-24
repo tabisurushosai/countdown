@@ -6,50 +6,55 @@
   "dateLabel": { "message": "締切日" },
   "repeatLabel": { "message": "繰り返し" },
   "deadlineListLabel": { "message": "締切一覧" },
-  "premiumInfoLabel": { "message": "Premium情報" },
-  "namePlaceholder": { "message": "名前" },
-  "onboardingGuide": { "message": "はじめての締切は、名前と日付を入れて「追加」を押すだけです。" },
+  "premiumInfoLabel": { "message": "Premiumの状態" },
+  "namePlaceholder": { "message": "例: レポート提出" },
+  "onboardingGuide": { "message": "最初の締切は、名前と日付を入力して「追加」を押してください。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
-  "message": "$NAME$ を削除",
+  "message": "「$NAME$」を削除",
   "placeholders": {
     "name": { "content": "$1" }
   }
   },
-  "statusOverdue": { "message": "超過" },
-  "statusToday": { "message": "今日" },
+  "statusOverdue": { "message": "期限超過" },
+  "statusToday": { "message": "本日" },
   "statusRemainingOne": {
-  "message": "残り $DAYS$ 日",
+  "message": "残り$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusRemaining": {
-  "message": "残り $DAYS$ 日",
+  "message": "残り$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "repeatNone": { "message": "繰り返さない" },
+  "repeatNone": { "message": "繰り返しなし" },
   "repeatWeekly": { "message": "毎週" },
   "repeatMonthly": { "message": "毎月" },
   "repeatYearly": { "message": "毎年" },
-  "upgradeButton": { "message": "Premium にアップグレード" },
-  "premiumActive": { "message": "Premium が有効です" },
+  "upgradeButton": { "message": "Premiumにアップグレード" },
+  "premiumActive": { "message": "Premiumが有効です" },
   "trialDaysLeftOne": {
-  "message": "トライアルは残り $DAYS$ 日です",
+  "message": "トライアル残り$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "trialDaysLeft": {
-  "message": "トライアルは残り $DAYS$ 日です",
+  "message": "トライアル残り$DAYS$日",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "limitReached": { "message": "無料版の上限（5件）に達しました。無制限で使うには Premium にアップグレードしてください。" },
+  "limitReached": {
+  "message": "無料版で登録できる締切は$LIMIT$件までです。無制限で使うにはPremiumにアップグレードしてください。",
+  "placeholders": {
+    "limit": { "content": "$1" }
+  }
+  },
   "loadingState": { "message": "読み込み中..." },
   "emptyState": { "message": "最初の締切を追加しましょう" },
   "emptyStateTitle": { "message": "最初の締切を追加しましょう" },
@@ -57,7 +62,7 @@
   "emptyStateHint": { "message": "入力欄はこの画面の上部にあります。" },
   "nextOccurrenceButtonTitle": { "message": "次の予定日に進める" },
   "nextOccurrenceButtonLabel": {
-  "message": "$NAME$ を次の予定日に進める",
+  "message": "「$NAME$」を次の予定日に進める",
   "placeholders": {
     "name": { "content": "$1" }
   }

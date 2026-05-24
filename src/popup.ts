@@ -1,6 +1,7 @@
 import {
   canAddDeadline,
   type DeadlineStatus,
+  FREE_DEADLINE_LIMIT,
   getDeadlineStatus,
   getDaysUntil,
   getNextDate,
@@ -294,7 +295,11 @@ inputForm.addEventListener('submit', async (event) => {
   const snapshot = await getCountdownSnapshot();
 
   if (!canAddDeadline(snapshot.isPremium, snapshot.deadlines.length)) {
-    alert(chrome.i18n.getMessage('limitReached'));
+    alert(
+      chrome.i18n.getMessage('limitReached', [
+        formatInteger(FREE_DEADLINE_LIMIT, displayLocale),
+      ]),
+    );
     return;
   }
 

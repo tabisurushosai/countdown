@@ -1,6 +1,7 @@
 import type { Deadline, DeadlineRepeat } from '../types';
 
 const DAY_MS = 1000 * 60 * 60 * 24;
+export const FREE_DEADLINE_LIMIT = 5;
 
 export interface BadgeState {
   text: string;
@@ -65,7 +66,7 @@ export function getBadgeState(deadlines: readonly Deadline[], today = new Date()
 }
 
 export function canAddDeadline(isPremium: boolean, deadlineCount: number): boolean {
-  return isPremium || deadlineCount < 5;
+  return isPremium || deadlineCount < FREE_DEADLINE_LIMIT;
 }
 
 export function getSavedRepeat(isPremium: boolean, repeat: DeadlineRepeat): DeadlineRepeat {
