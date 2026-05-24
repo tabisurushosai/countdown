@@ -1,5 +1,8 @@
 import type { Deadline } from '../core/types';
 import {
+  COUNTDOWN_DEADLINE_KEYS,
+  COUNTDOWN_SNAPSHOT_KEYS,
+  COUNTDOWN_TRIAL_KEYS,
   DEADLINES_KEY,
   IS_PREMIUM_KEY,
   TRIAL_START_KEY,
@@ -21,23 +24,23 @@ export interface CountdownStorage {
 }
 
 export async function getDeadlines(storage: CountdownStorageAdapter): Promise<Deadline[]> {
-  const result = await storage.get([DEADLINES_KEY]);
-  return result.deadlines || [];
+  const result = await storage.get(COUNTDOWN_DEADLINE_KEYS);
+  return result[DEADLINES_KEY] ?? [];
 }
 
 export async function setDeadlines(
   deadlines: Deadline[],
   storage: CountdownStorageAdapter,
 ): Promise<void> {
-  await storage.set({ deadlines });
+  await storage.set({ [DEADLINES_KEY]: deadlines });
 }
 
 export async function getCountdownSnapshot(storage: CountdownStorageAdapter): Promise<CountdownSnapshot> {
-  const result = await storage.get([DEADLINES_KEY, IS_PREMIUM_KEY, TRIAL_START_KEY]);
+  const result = await storage.get(COUNTDOWN_SNAPSHOT_KEYS);
   return {
-    deadlines: result.deadlines || [],
-    isPremium: result.isPremium || false,
-    trialStartTs: result.trial_start_ts,
+    deadlines: result[DEADLINES_KEY] ?? [],
+    isPremium: result[IS_PREMIUM_KEY] ?? false,
+    trialStartTs: result[TRIAL_START_KEY],
   };
 }
 
@@ -45,12 +48,12 @@ export async function ensureTrialStart(
   storage: CountdownStorageAdapter,
   nowTs = Date.now(),
 ): Promise<number> {
-  const result = await storage.get([TRIAL_START_KEY]);
-  if (result.trial_start_ts) {
-    return result.trial_start_ts;
+  const result = await storage.get(COUNTDOWN_TRIAL_KEYS);
+  if (result[TRIAL_START_KEY] !== undefined) {
+    return result[TRIAL_START_KEY];
   }
 
-  await storage.set({ trial_start_ts: nowTs });
+  await storage.set({ [TRIAL_START_KEY]: nowTs });
   return nowTs;
 }
 
@@ -58,7 +61,7 @@ export async function setPremium(
   isPremium: boolean,
   storage: CountdownStorageAdapter,
 ): Promise<void> {
-  await storage.set({ isPremium });
+  await storage.set({ [IS_PREMIUM_KEY]: isPremium });
 }
 
 export function createCountdownStorage(storage: CountdownStorageAdapter): CountdownStorage {

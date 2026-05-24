@@ -23,18 +23,26 @@ export type CountdownStorageReadResult<Key extends readonly CountdownStorageKey[
   Key
 >;
 
+export const COUNTDOWN_DEADLINE_KEYS = [DEADLINES_KEY] as const satisfies readonly CountdownStorageKey[];
+export const COUNTDOWN_SNAPSHOT_KEYS = [
+  DEADLINES_KEY,
+  IS_PREMIUM_KEY,
+  TRIAL_START_KEY,
+] as const satisfies readonly CountdownStorageKey[];
+export const COUNTDOWN_TRIAL_KEYS = [TRIAL_START_KEY] as const satisfies readonly CountdownStorageKey[];
+
 /**
- * Minimal local key-value storage boundary.
+ * Minimal local key-value persistence boundary.
  *
- * Platform code (Chrome, iOS, Android) owns the concrete implementation. Core
- * countdown behavior should receive data through storage helpers instead of
- * importing platform SDKs directly.
+ * Platform code owns the concrete implementation. Shared countdown behavior
+ * receives data through storage helpers instead of importing Chrome or native
+ * SDKs directly.
  */
-export interface LocalStorageAdapter<Schema extends object> {
+export interface KeyValueStorageAdapter<Schema extends object> {
   get<const Key extends readonly StorageSchemaKey<Schema>[]>(
     keys: Key,
   ): Promise<StorageReadResult<Schema, Key>>;
   set(values: StorageWritePatch<Schema>): Promise<void>;
 }
 
-export type CountdownStorageAdapter = LocalStorageAdapter<CountdownStorageSchema>;
+export type CountdownStorageAdapter = KeyValueStorageAdapter<CountdownStorageSchema>;
