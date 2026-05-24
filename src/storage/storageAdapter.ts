@@ -12,13 +12,13 @@ export interface CountdownStorageSchema {
 
 export type CountdownStorageKey = keyof CountdownStorageSchema;
 export type StorageSchemaKey<Schema extends object> = Extract<keyof Schema, string>;
-export type StorageSelection<
+export type StorageReadResult<
   Schema extends object,
   Key extends readonly StorageSchemaKey<Schema>[],
 > = Partial<Pick<Schema, Key[number]>>;
-export type StoragePatch<Schema extends object> = Partial<Schema>;
-export type CountdownStorageValues = StoragePatch<CountdownStorageSchema>;
-export type CountdownStorageSelection<Key extends readonly CountdownStorageKey[]> = StorageSelection<
+export type StorageWritePatch<Schema extends object> = Partial<Schema>;
+export type CountdownStoragePatch = StorageWritePatch<CountdownStorageSchema>;
+export type CountdownStorageReadResult<Key extends readonly CountdownStorageKey[]> = StorageReadResult<
   CountdownStorageSchema,
   Key
 >;
@@ -30,11 +30,11 @@ export type CountdownStorageSelection<Key extends readonly CountdownStorageKey[]
  * countdown behavior should receive data through storage helpers instead of
  * importing platform SDKs directly.
  */
-export interface StorageAdapter<Schema extends object> {
+export interface LocalStorageAdapter<Schema extends object> {
   get<const Key extends readonly StorageSchemaKey<Schema>[]>(
     keys: Key,
-  ): Promise<StorageSelection<Schema, Key>>;
-  set(values: StoragePatch<Schema>): Promise<void>;
+  ): Promise<StorageReadResult<Schema, Key>>;
+  set(values: StorageWritePatch<Schema>): Promise<void>;
 }
 
-export type CountdownStorageAdapter = StorageAdapter<CountdownStorageSchema>;
+export type CountdownStorageAdapter = LocalStorageAdapter<CountdownStorageSchema>;
