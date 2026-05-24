@@ -10,19 +10,25 @@ const DATE_FORMATTERS: Record<DisplayLocale, Intl.DateTimeFormat> = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    weekday: 'short',
     timeZone: 'UTC',
   }),
   en: new Intl.DateTimeFormat(LOCALE_TAGS.en, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    weekday: 'short',
     timeZone: 'UTC',
   }),
 };
 
 const NUMBER_FORMATTERS: Record<DisplayLocale, Intl.NumberFormat> = {
-  ja: new Intl.NumberFormat(LOCALE_TAGS.ja),
-  en: new Intl.NumberFormat(LOCALE_TAGS.en),
+  ja: new Intl.NumberFormat(LOCALE_TAGS.ja, {
+    maximumFractionDigits: 0,
+  }),
+  en: new Intl.NumberFormat(LOCALE_TAGS.en, {
+    maximumFractionDigits: 0,
+  }),
 };
 
 export function formatInteger(value: number, locale: DisplayLocale): string {

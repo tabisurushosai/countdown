@@ -54,6 +54,7 @@ function initI18n(): void {
   displayLocale = chrome.i18n.getUILanguage().startsWith('ja') ? 'ja' : 'en';
   document.documentElement.lang = displayLocale;
 
+  document.title = chrome.i18n.getMessage('title');
   const titleEl = document.getElementById('title');
   if (titleEl) titleEl.textContent = chrome.i18n.getMessage('title');
   setTextById('deadline-name-label', chrome.i18n.getMessage('nameLabel'));

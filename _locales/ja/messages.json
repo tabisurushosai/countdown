@@ -1,6 +1,6 @@
 {
   "extName": { "message": "締切カウントダウン" },
-  "extDesc": { "message": "提出日や予定までの残り日数をアイコンに表示。うっかり忘れを防ぎます。" },
+  "extDesc": { "message": "締切までの残り日数をツールバーのアイコンに表示します。予定忘れを防ぎます。" },
   "title": { "message": "締切カウントダウン" },
   "nameLabel": { "message": "締切名" },
   "dateLabel": { "message": "締切日" },
@@ -8,7 +8,7 @@
   "deadlineListLabel": { "message": "締切一覧" },
   "premiumInfoLabel": { "message": "Premiumの状態" },
   "namePlaceholder": { "message": "例: レポート提出" },
-  "onboardingGuide": { "message": "最初の締切は、名前と日付を入力して「追加」を押してください。" },
+  "onboardingGuide": { "message": "締切名と日付を入力し、「追加」を押すと登録できます。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
@@ -17,8 +17,8 @@
     "name": { "content": "$1" }
   }
   },
-  "statusOverdue": { "message": "期限超過" },
-  "statusToday": { "message": "本日" },
+  "statusOverdue": { "message": "期限切れ" },
+  "statusToday": { "message": "今日が締切" },
   "statusRemainingOne": {
   "message": "残り$DAYS$日",
   "placeholders": {
@@ -36,15 +36,15 @@
   "repeatMonthly": { "message": "毎月" },
   "repeatYearly": { "message": "毎年" },
   "upgradeButton": { "message": "Premiumにアップグレード" },
-  "premiumActive": { "message": "Premiumが有効です" },
+  "premiumActive": { "message": "Premiumは有効です" },
   "trialDaysLeftOne": {
-  "message": "トライアル残り$DAYS$日",
+  "message": "トライアルは残り$DAYS$日です",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "trialDaysLeft": {
-  "message": "トライアル残り$DAYS$日",
+  "message": "トライアルは残り$DAYS$日です",
   "placeholders": {
     "days": { "content": "$1" }
   }

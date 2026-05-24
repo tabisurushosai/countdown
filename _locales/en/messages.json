@@ -1,14 +1,14 @@
 {
   "extName": { "message": "Deadline Countdown" },
-  "extDesc": { "message": "Shows days left until your deadlines on the toolbar icon." },
+  "extDesc": { "message": "Displays the days remaining until your deadlines on the toolbar icon." },
   "title": { "message": "Deadline Countdown" },
   "nameLabel": { "message": "Deadline name" },
-  "dateLabel": { "message": "Deadline date" },
+  "dateLabel": { "message": "Due date" },
   "repeatLabel": { "message": "Repeat" },
-  "deadlineListLabel": { "message": "Deadlines" },
+  "deadlineListLabel": { "message": "Deadline list" },
   "premiumInfoLabel": { "message": "Premium status" },
   "namePlaceholder": { "message": "e.g. Submit report" },
-  "onboardingGuide": { "message": "Enter a name and date, then select Add." },
+  "onboardingGuide": { "message": "Enter a deadline name and due date, then choose Add." },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
   "deleteDeadlineButtonLabel": {
@@ -17,34 +17,34 @@
     "name": { "content": "$1" }
   }
   },
-  "statusOverdue": { "message": "Past due" },
+  "statusOverdue": { "message": "Overdue" },
   "statusToday": { "message": "Due today" },
   "statusRemainingOne": {
-  "message": "$DAYS$ day remaining",
+  "message": "$DAYS$ day left",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusRemaining": {
-  "message": "$DAYS$ days remaining",
+  "message": "$DAYS$ days left",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "repeatNone": { "message": "No repeat" },
-  "repeatWeekly": { "message": "Every week" },
-  "repeatMonthly": { "message": "Every month" },
-  "repeatYearly": { "message": "Every year" },
+  "repeatWeekly": { "message": "Weekly" },
+  "repeatMonthly": { "message": "Monthly" },
+  "repeatYearly": { "message": "Yearly" },
   "upgradeButton": { "message": "Upgrade to Premium" },
   "premiumActive": { "message": "Premium is active" },
   "trialDaysLeftOne": {
-  "message": "$DAYS$ day remaining in your trial",
+  "message": "$DAYS$ day left in your trial",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "trialDaysLeft": {
-  "message": "$DAYS$ days remaining in your trial",
+  "message": "$DAYS$ days left in your trial",
   "placeholders": {
     "days": { "content": "$1" }
   }
@@ -58,7 +58,7 @@
   "loadingState": { "message": "Loading..." },
   "emptyState": { "message": "Add your first deadline" },
   "emptyStateTitle": { "message": "Add your first deadline" },
-  "emptyStateBody": { "message": "After you add it, the list and toolbar badge will show the days remaining." },
+  "emptyStateBody": { "message": "After you add it, the list and toolbar badge will show the days left." },
   "emptyStateHint": { "message": "Use the fields above to get started." },
   "nextOccurrenceButtonTitle": { "message": "Move to next occurrence" },
   "nextOccurrenceButtonLabel": {
