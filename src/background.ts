@@ -7,9 +7,9 @@ async function refreshBadge(): Promise<void> {
 }
 
 chrome.runtime.onStartup.addListener(() => {
-  refreshBadge();
+  void refreshBadge();
 });
 
 chrome.runtime.onInstalled.addListener(() => {
-  refreshBadge();
+  void refreshBadge();
 });
