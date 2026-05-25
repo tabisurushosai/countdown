@@ -39,11 +39,19 @@ Keep the existing storage keys and value shapes unchanged:
 - `isPremium`: `boolean`
 - `trial_start_ts`: `number`
 
+The portable adapter boundary is
+`LocalKeyValueStorageAdapter<CountdownStorageSchema>`, exposed to app code as
+`CountdownStorageAdapter`. A platform adapter has only two responsibilities:
+
+- `get(keys)` returns a partial object containing the requested storage keys;
+- `set(values)` writes the provided partial object without clearing other keys.
+
 The Chrome extension uses `chromeLocalStorageAdapter`, which maps this contract
 to `chrome.storage.local`. A mobile app should implement the same
 `CountdownStorageAdapter` key-value interface against its local storage
 mechanism and pass it to the exported storage helpers when testing or wiring
-platform services.
+platform services. Only concrete adapter modules, such as
+`src/storage/chromeLocalStorageAdapter.ts`, should import platform SDKs.
 
 Use the shared constants in `src/storage/storageAdapter.ts` for storage keys
 instead of spelling them in platform code. That keeps Chrome, iOS, Android, and

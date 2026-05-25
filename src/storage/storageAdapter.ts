@@ -10,15 +10,16 @@ export interface CountdownStorageSchema {
   [TRIAL_START_KEY]: number;
 }
 
-export type CountdownStorageKey = keyof CountdownStorageSchema;
-export type StorageSchemaKey<Schema extends object> = Extract<keyof Schema, string>;
+export type StorageKey<Schema extends object> = Extract<keyof Schema, string>;
+export type StorageKeyList<Schema extends object> = readonly StorageKey<Schema>[];
 export type StorageReadResult<
   Schema extends object,
-  Key extends readonly StorageSchemaKey<Schema>[],
+  Key extends StorageKeyList<Schema>,
 > = Partial<Pick<Schema, Key[number]>>;
 export type StorageWritePatch<Schema extends object> = Partial<Schema>;
+export type CountdownStorageKey = StorageKey<CountdownStorageSchema>;
 export type CountdownStoragePatch = StorageWritePatch<CountdownStorageSchema>;
-export type CountdownStorageReadResult<Key extends readonly CountdownStorageKey[]> = StorageReadResult<
+export type CountdownStorageReadResult<Key extends StorageKeyList<CountdownStorageSchema>> = StorageReadResult<
   CountdownStorageSchema,
   Key
 >;
@@ -36,13 +37,15 @@ export const COUNTDOWN_TRIAL_KEYS = [TRIAL_START_KEY] as const satisfies readonl
  *
  * Platform code owns the concrete implementation. Shared countdown behavior
  * receives data through storage helpers instead of importing Chrome or native
- * SDKs directly.
+ * SDKs directly. Adapters must preserve the storage key names and value shapes
+ * in CountdownStorageSchema so Chrome and mobile shells can share persisted
+ * data without migrations.
  */
-export interface KeyValueStorageAdapter<Schema extends object> {
-  get<const Key extends readonly StorageSchemaKey<Schema>[]>(
+export interface LocalKeyValueStorageAdapter<Schema extends object> {
+  get<const Key extends StorageKeyList<Schema>>(
     keys: Key,
   ): Promise<StorageReadResult<Schema, Key>>;
   set(values: StorageWritePatch<Schema>): Promise<void>;
 }
 
-export type CountdownStorageAdapter = KeyValueStorageAdapter<CountdownStorageSchema>;
+export type CountdownStorageAdapter = LocalKeyValueStorageAdapter<CountdownStorageSchema>;
