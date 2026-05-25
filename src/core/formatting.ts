@@ -13,7 +13,7 @@ const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
 };
 
 const WEEKDAY_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
-  weekday: 'short',
+  weekday: 'long',
   timeZone: 'UTC',
 };
 

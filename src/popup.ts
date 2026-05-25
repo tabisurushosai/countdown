@@ -302,10 +302,14 @@ async function checkPremium(): Promise<void> {
     setRepeatSelectHidden(false);
   } else {
     const remainingTrial = getRemainingTrialDays(trialStart);
-    const messageKey = remainingTrial === 1 ? 'trialDaysLeftOne' : 'trialDaysLeft';
-    trialStatus.textContent = chrome.i18n.getMessage(messageKey, [
-      formatInteger(remainingTrial, displayLocale),
-    ]);
+    if (remainingTrial === 0) {
+      trialStatus.textContent = chrome.i18n.getMessage('trialEnded');
+    } else {
+      const messageKey = remainingTrial === 1 ? 'trialDaysLeftOne' : 'trialDaysLeft';
+      trialStatus.textContent = chrome.i18n.getMessage(messageKey, [
+        formatInteger(remainingTrial, displayLocale),
+      ]);
+    }
     setHidden(upgradeBtn, false);
     setRepeatSelectHidden(true);
   }
