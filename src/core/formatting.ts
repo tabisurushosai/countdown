@@ -37,15 +37,17 @@ const NUMBER_FORMATTERS: Record<DisplayLocale, Intl.NumberFormat> = {
   en: new Intl.NumberFormat(LOCALE_TAGS.en, NUMBER_FORMAT_OPTIONS),
 };
 
+const DISPLAY_DATE_PATTERN = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})$/;
+
 function parseDisplayDateParts(dateStr: string): { year: number; month: number; day: number } | undefined {
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr);
-  if (!match) {
+  const groups = DISPLAY_DATE_PATTERN.exec(dateStr)?.groups;
+  if (!groups) {
     return undefined;
   }
 
-  const year = Number(match[1]);
-  const month = Number(match[2]);
-  const day = Number(match[3]);
+  const year = Number(groups.year);
+  const month = Number(groups.month);
+  const day = Number(groups.day);
   const parsed = new Date(Date.UTC(year, month - 1, day));
 
   if (

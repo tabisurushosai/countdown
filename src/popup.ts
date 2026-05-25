@@ -20,6 +20,18 @@ const REPEAT_LABEL_MESSAGE_KEYS: Record<Exclude<DeadlineRepeat, 'none'>, string>
   yearly: 'repeatYearly',
 };
 
+const TEXT_MESSAGE_TARGETS = [
+  ['deadline-name-label', 'nameLabel'],
+  ['deadline-date-label', 'dateLabel'],
+  ['deadline-repeat-label', 'repeatLabel'],
+  ['deadline-list-title', 'deadlineListLabel'],
+  ['premium-info-title', 'premiumInfoLabel'],
+  ['repeat-none', 'repeatNone'],
+  ['repeat-weekly', 'repeatWeekly'],
+  ['repeat-monthly', 'repeatMonthly'],
+  ['repeat-yearly', 'repeatYearly'],
+] as const;
+
 function getRequiredElement<T extends HTMLElement>(id: string, elementType: { new (): T }): T {
   const element = document.getElementById(id);
   if (!(element instanceof elementType)) {
@@ -51,19 +63,12 @@ function initI18n(): void {
   document.title = chrome.i18n.getMessage('title');
   const titleEl = document.getElementById('title');
   if (titleEl) titleEl.textContent = chrome.i18n.getMessage('title');
-  setTextById('deadline-name-label', chrome.i18n.getMessage('nameLabel'));
-  setTextById('deadline-date-label', chrome.i18n.getMessage('dateLabel'));
-  setTextById('deadline-repeat-label', chrome.i18n.getMessage('repeatLabel'));
-  setTextById('deadline-list-title', chrome.i18n.getMessage('deadlineListLabel'));
-  setTextById('premium-info-title', chrome.i18n.getMessage('premiumInfoLabel'));
+  TEXT_MESSAGE_TARGETS.forEach(([id, messageKey]) => {
+    setTextById(id, chrome.i18n.getMessage(messageKey));
+  });
   nameInput.placeholder = chrome.i18n.getMessage('namePlaceholder');
   onboardingGuide.textContent = chrome.i18n.getMessage('onboardingGuide');
   addBtn.textContent = chrome.i18n.getMessage('addButton');
-
-  setTextById('repeat-none', chrome.i18n.getMessage('repeatNone'));
-  setTextById('repeat-weekly', chrome.i18n.getMessage('repeatWeekly'));
-  setTextById('repeat-monthly', chrome.i18n.getMessage('repeatMonthly'));
-  setTextById('repeat-yearly', chrome.i18n.getMessage('repeatYearly'));
   upgradeBtn.textContent = chrome.i18n.getMessage('upgradeButton');
   listContainer.removeAttribute('role');
   listContainer.setAttribute('aria-busy', 'true');

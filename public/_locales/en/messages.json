@@ -67,7 +67,6 @@
   }
   },
   "loadingState": { "message": "Loading..." },
-  "emptyState": { "message": "No deadlines yet" },
   "emptyStateTitle": { "message": "No deadlines yet" },
   "emptyStateBody": { "message": "Add your first deadline to see it here, sorted by the nearest due date." },
   "emptyStateHint": { "message": "If you are not sure where to start, use Deadline name and Due date above." },
