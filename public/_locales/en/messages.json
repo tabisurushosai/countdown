@@ -8,7 +8,7 @@
   "deadlineListLabel": { "message": "Saved deadlines" },
   "premiumInfoLabel": { "message": "Premium status" },
   "namePlaceholder": { "message": "e.g. Submit report" },
-  "onboardingGuide": { "message": "Start by adding one deadline name and due date in the input fields. After adding it, the list and badge will show the days left." },
+  "onboardingGuide": { "message": "Start by adding one deadline name and due date. After adding it, the list and badge will show the days remaining." },
   "addButton": { "message": "Add" },
   "deleteButton": { "message": "Delete" },
   "deleteDeadlineButtonLabel": {
@@ -18,26 +18,26 @@
   }
   },
   "statusOverdueOne": {
-  "message": "$DAYS$ day overdue",
+  "message": "$DAYS$ day past due",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusOverdue": {
-  "message": "$DAYS$ days overdue",
+  "message": "$DAYS$ days past due",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "statusToday": { "message": "Deadline is today" },
+  "statusToday": { "message": "Due today" },
   "statusRemainingOne": {
-  "message": "$DAYS$ day left",
+  "message": "$DAYS$ day remaining",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusRemaining": {
-  "message": "$DAYS$ days left",
+  "message": "$DAYS$ days remaining",
   "placeholders": {
     "days": { "content": "$1" }
   }
@@ -49,26 +49,27 @@
   "upgradeButton": { "message": "Upgrade to Premium" },
   "premiumActive": { "message": "Premium is active" },
   "trialDaysLeftOne": {
-  "message": "$DAYS$ day left in your trial",
+  "message": "$DAYS$ day remaining in your trial",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "trialDaysLeft": {
-  "message": "$DAYS$ days left in your trial",
+  "message": "$DAYS$ days remaining in your trial",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
+  "trialEnded": { "message": "Your trial has ended" },
   "limitReached": {
-  "message": "The free plan supports up to $LIMIT$ deadlines. Premium removes the limit and enables repeating deadlines.",
+  "message": "You can save up to $LIMIT$ deadlines on the free plan. Premium removes this limit and enables repeating deadlines.",
   "placeholders": {
     "limit": { "content": "$1" }
   }
   },
   "loadingState": { "message": "Loading..." },
   "emptyStateTitle": { "message": "No deadlines yet" },
-  "emptyStateBody": { "message": "Add your first deadline to see it here, sorted by the nearest due date." },
+  "emptyStateBody": { "message": "Add a deadline to see it here, sorted by the nearest due date." },
   "emptyStateHint": { "message": "If you are not sure where to start, use Deadline name and Due date above." },
   "emptyStateAction": { "message": "Go to input fields" },
   "nextOccurrenceButtonTitle": { "message": "Move to the next due date" },

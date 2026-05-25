@@ -8,7 +8,7 @@
   "deadlineListLabel": { "message": "登録した締切" },
   "premiumInfoLabel": { "message": "Premiumのステータス" },
   "namePlaceholder": { "message": "例: レポート提出" },
-  "onboardingGuide": { "message": "まず入力欄で締切名と締切日を1つ登録しましょう。追加後は一覧とバッジで残り日数を確認できます。" },
+  "onboardingGuide": { "message": "まずは締切名と締切日を1件登録しましょう。追加後は一覧とバッジで残り日数を確認できます。" },
   "addButton": { "message": "追加" },
   "deleteButton": { "message": "削除" },
   "deleteDeadlineButtonLabel": {
@@ -18,18 +18,18 @@
   }
   },
   "statusOverdueOne": {
-  "message": "締切から$DAYS$日経過",
+  "message": "締切を$DAYS$日過ぎています",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "statusOverdue": {
-  "message": "締切から$DAYS$日経過",
+  "message": "締切を$DAYS$日過ぎています",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
-  "statusToday": { "message": "締切は今日です" },
+  "statusToday": { "message": "今日が締切です" },
   "statusRemainingOne": {
   "message": "締切まであと$DAYS$日",
   "placeholders": {
@@ -49,26 +49,27 @@
   "upgradeButton": { "message": "Premiumにアップグレード" },
   "premiumActive": { "message": "Premiumが有効です" },
   "trialDaysLeftOne": {
-  "message": "トライアルはあと$DAYS$日です",
+  "message": "トライアルは残り$DAYS$日です",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
   "trialDaysLeft": {
-  "message": "トライアルはあと$DAYS$日です",
+  "message": "トライアルは残り$DAYS$日です",
   "placeholders": {
     "days": { "content": "$1" }
   }
   },
+  "trialEnded": { "message": "トライアル期間は終了しました" },
   "limitReached": {
-  "message": "無料版で登録できる締切は最大$LIMIT$件です。Premiumにすると締切数の上限がなくなり、繰り返しも使えます。",
+  "message": "無料版で登録できる締切は$LIMIT$件までです。Premiumにすると締切数の上限がなくなり、繰り返しも使えます。",
   "placeholders": {
     "limit": { "content": "$1" }
   }
   },
   "loadingState": { "message": "読み込み中..." },
   "emptyStateTitle": { "message": "まだ締切はありません" },
-  "emptyStateBody": { "message": "最初の締切を追加すると、ここに日付が近い順で表示されます。" },
+  "emptyStateBody": { "message": "締切を追加すると、ここに日付が近い順で表示されます。" },
   "emptyStateHint": { "message": "迷ったら、上の「締切名」と「締切日」から始めてください。" },
   "emptyStateAction": { "message": "入力欄へ移動" },
   "nextOccurrenceButtonTitle": { "message": "次回の締切日に進める" },
